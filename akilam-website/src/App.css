@@ -4,7 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
-
+.btnmagic{
+  background-color: coral;
+  color: white;
+  border-color: #888;
+}
+.headline{
+  color: #888;
+  inline-size: none;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
