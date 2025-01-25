@@ -1,21 +1,50 @@
-import { useState } from 'react'
-import './App.css'
+// eslint-disable-next-line no-unused-vars
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+
+import HomePage from "./pages/HomePage";
+import AboutUs from "./pages/AboutUs";
+import EnquiryPage from "./pages/EnquiryPage";
+import OurProjects from "./pages/OurProjects";
+import "./App.css";
+import Footer from "./components/Footer";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#ae3a94", // Red as the primary color
+      },
+      secondary: {
+        main: "#58a6ff", // Light grey as the secondary color
+      },
+    },
+  });
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <Router>
+        {/* Header at the top of the page */}
+        <Header />
 
-      <h1 className='headline'>Akilam Technology</h1>
-      <div className="card">
-        <button className='btnmagic' onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div>
-     
-    </>
-  )
+        {/* Main content */}
+
+            {/* Routing setup for different pages */}
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route path="/enquiry" element={<EnquiryPage />} />
+              <Route path="/projects" element={<OurProjects />} />
+            </Routes>
+<Footer/>
+      </Router>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
