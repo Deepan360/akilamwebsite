@@ -79,124 +79,124 @@ const HomePage = () => {
     {
       name: "HTML5",
       description: "The standard markup language for creating web pages.",
-      icon: "/public/assets/image/1l.png",
+      icon: "/assets/image/1l.png",
     },
     {
       name: "CSS3",
       description: "The latest version of the Cascading Style Sheets language.",
-      icon: "/public/assets/image/2l.png",
+      icon: "/assets/image/2l.png",
     },
     {
       name: "JavaScript",
       description:
         "A high-level programming language essential for interactive web development.",
-      icon: "/public/assets/image/3l.png",
+      icon: "/assets/image/3l.png",
     },
     {
       name: "TypeScript",
       description:
         "A superset of JavaScript that adds static typing, enhancing code quality.",
-      icon: "/public/assets/image/4l.png",
+      icon: "/assets/image/4l.png",
     },
     {
       name: "React",
       description:
         "A JavaScript library for building user interfaces, particularly SPAs.",
-      icon: "/public/assets/image/logo_dark.svg",
+      icon: "/assets/image/logo_dark.svg",
     },
     {
       name: "Angular",
       description:
         "A platform for building client applications using HTML and TypeScript.",
-      icon: "/public/assets/image/6l.png",
+      icon: "/assets/image/6l.png",
     },
     {
       name: "Python",
       description:
         "A versatile, high-level programming language known for its readability.",
-      icon: "/public/assets/image/7l.png",
+      icon: "/assets/image/7l.png",
     },
     {
       name: "Java",
       description:
         "A class-based, object-oriented language used for enterprise-scale apps.",
-      icon: "/public/assets/image/8l.png",
+      icon: "/assets/image/8l.png",
     },
     {
       name: "C#",
       description:
         "A modern, object-oriented programming language for building varied applications.",
-      icon: "/public/assets/image/9l.png",
+      icon: "/assets/image/9l.png",
     },
     {
       name: "Go (Golang)",
       description:
         "A statically typed, compiled language known for its simplicity.",
-      icon: "/public/assets/image/10l.png",
+      icon: "/assets/image/10l.png",
     },
     {
       name: "Rust",
       description:
         "A systems programming language focused on safety and speed.",
-      icon: "/public/assets/image/16l.svg",
+      icon: "/assets/image/16l.svg",
     },
     {
       name: "PHP",
       description:
         "A widely-used open-source scripting language for web development.",
-      icon: "/public/assets/image/12l.png",
+      icon: "/assets/image/12l.png",
     },
     {
       name: "Node.js",
       description: "A JavaScript runtime enabling server-side scripting.",
-      icon: "/public/assets/image/nodejs.webp",
+      icon: "/assets/image/nodejs.webp",
     },
     {
       name: "Next.js",
       description:
         "A React framework for building server-side rendered and statically generated web applications.",
-      icon: "/public/assets/image/dango-inner-2.webp", // Path to Next.js icon or image
+      icon: "/assets/image/dango-inner-2.webp", // Path to Next.js icon or image
     },
 
     {
       name: "MySQL",
       description: "An open-source relational database management system.",
-      icon: "/public/assets/image/14l.png",
+      icon: "/assets/image/14l.png",
     },
     {
       name: "PostgreSQL",
       description:
         "An object-relational database system known for extensibility.",
-      icon: "/public/assets/image/15l.png",
+      icon: "/assets/image/15l.png",
     },
     {
       name: "MongoDB",
       description: "A NoSQL database known for flexibility and scalability.",
-      icon: "/public/assets/image/mongo.svg",
+      icon: "/assets/image/mongo.svg",
     },
     {
       name: "SQLite",
       description:
         "A small, fast, self-contained, high-reliability SQL database engine.",
-      icon: "/public/assets/image/sqllite.jpg",
+      icon: "/assets/image/sqllite.jpg",
     },
     {
       name: "Oracle Database",
       description:
         "A multi-model database management system produced by Oracle.",
-      icon: "/public/assets/image/18l.png",
+      icon: "/assets/image/18l.png",
     },
     {
       name: "Microsoft SQL Server",
       description:
         "A relational database management system developed by Microsoft.",
-      icon: "/public/assets/image/19l.png",
+      icon: "/assets/image/19l.png",
     },
     {
       name: "Redis",
       description:
         "An in-memory data structure store used as a database, cache, and message broker.",
-      icon: "/public/assets/image/20l.webp",
+      icon: "/assets/image/20l.webp",
     },
   ];
 
@@ -214,7 +214,7 @@ const HomePage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1500); // Change every 3 seconds
+    }, 1000); // Change every 1 seconds
     return () => clearInterval(interval);
   }, [images.length]);
   return (

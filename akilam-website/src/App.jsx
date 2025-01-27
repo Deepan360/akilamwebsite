@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import HomePage from "./pages/HomePage";
 import AboutUs from "./pages/AboutUs";
 import EnquiryPage from "./pages/EnquiryPage";
-import OurProjects from "./pages/OurProjects";
+import OurProducts from "./pages/OurProducts";
 import "./App.css";
 import Footer from "./components/Footer";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -33,15 +33,15 @@ function App() {
 
         {/* Main content */}
 
-            {/* Routing setup for different pages */}
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/enquiry" element={<EnquiryPage />} />
-              <Route path="/projects" element={<OurProjects />} />
-            </Routes>
-<Footer/>
+        {/* Routing setup for different pages */}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/enquiry" element={<EnquiryPage />} />
+          <Route path="/OurProducts" element={<OurProducts />} />
+        </Routes>
+        <Footer />
       </Router>
     </ThemeProvider>
   );

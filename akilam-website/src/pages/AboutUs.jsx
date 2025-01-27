@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
 import {
   Box,
@@ -5,7 +6,6 @@ import {
   Typography,
   Card,
   CardContent,
-  Divider,
 } from "@mui/material";
 import {
   Create as VisionIcon,
@@ -29,7 +29,29 @@ const About = () => {
         sx={{
           textAlign: "center",
           py: 5,
-          background: "linear-gradient(135deg, #0d1117, #161b22)",
+          height: "70vh",
+          backgroundImage: "url('/public/assets/image/office.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "end",
+          alignItems: "center",
+          color: "#fff",
+   
+          "::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "82vh",
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.2)", // Dark overlay effect
+            zIndex: 1,
+          },
+          zIndex: 2,
         }}
       >
         <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
@@ -37,15 +59,21 @@ const About = () => {
         </Typography>
         <Typography
           variant="subtitle1"
-          sx={{ color: "#8892b0", maxWidth: "700px", mx: "auto" }}
+          sx={{
+            color: "#fff",
+            maxWidth: "900px",
+            mx: "auto",
+            fontSize: "1.2rem",
+            fontWeight: "bold",
+          }}
         >
           We strive to create impactful solutions that enhance businesses, solve
           societal challenges, and foster innovation. With an expert team and a
           deep commitment to change, we focus on making a lasting impact across
           the globe. Every initiative we take is aimed at empowering individuals
-          and communities, making a significant difference in today's fast-paced
-          world. Our approach blends creativity with technology to drive
-          sustainable growth.
+          and communities, making a significant difference in today&apos;s
+          fast-paced world. Our approach blends creativity with technology to
+          drive sustainable growth.
         </Typography>
       </Box>
 
@@ -167,8 +195,6 @@ const About = () => {
         </Grid>
       </Box>
 
-      {/* New Section: Innovation and Vision */}
-      <Divider sx={{ backgroundColor: "#252932", my: 5 }} />
       <Box
         sx={{
           py: 5,
@@ -178,7 +204,7 @@ const About = () => {
       >
         <Grid container spacing={4} justifyContent="center">
           {/* Innovation Section */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5}>
             <Card
               sx={{
                 borderRadius: 8,
@@ -192,7 +218,13 @@ const About = () => {
               }}
             >
               <CardContent sx={{ textAlign: "center", p: 5 }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+                <TeamIcon
+                  sx={{ fontSize: 100, color: "#fff", marginBottom: 2 }}
+                />
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", mb: 3, color: "primary.main" }}
+                >
                   Innovation at Its Core
                 </Typography>
                 <Typography
@@ -215,7 +247,7 @@ const About = () => {
           </Grid>
 
           {/* Vision for the Future */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={5}>
             <Card
               sx={{
                 borderRadius: 8,
@@ -229,7 +261,13 @@ const About = () => {
               }}
             >
               <CardContent sx={{ textAlign: "center", p: 5 }}>
-                <Typography variant="h5" sx={{ fontWeight: "bold", mb: 3 }}>
+                <ImpactIcon
+                  sx={{ fontSize: 100, color: "#fff", marginBottom: 2 }}
+                />
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bold", mb: 3, color: "primary.main" }}
+                >
                   Our Vision for the Future
                 </Typography>
                 <Typography
