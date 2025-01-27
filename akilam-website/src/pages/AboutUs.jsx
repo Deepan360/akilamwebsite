@@ -19,7 +19,7 @@ const About = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#161b22",
+        background: "linear-gradient(#000,rgb(25, 40, 71))",
         color: "#c9d1d9",
         minHeight: "100vh",
       }}
@@ -39,7 +39,7 @@ const About = () => {
           justifyContent: "end",
           alignItems: "center",
           color: "#fff",
-   
+
           "::before": {
             content: '""',
             position: "absolute",
@@ -81,6 +81,7 @@ const About = () => {
       <Box
         sx={{
           padding: "50px 20px",
+          background: "linear-gradient(#000,rgb(25, 40, 71))",
         }}
       >
         <Grid container spacing={5} justifyContent="center">
@@ -199,7 +200,7 @@ const About = () => {
         sx={{
           py: 5,
           px: 3,
-          background: "linear-gradient(135deg, #0d1117, #161b22)",
+          background: "linear-gradient(rgb(25, 40, 71),rgb(25, 40, 71))",
         }}
       >
         <Grid container spacing={4} justifyContent="center">
