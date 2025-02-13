@@ -223,7 +223,7 @@ const OurProducts = () => {
           borderRadius: "16px",  // Smooth rounded corners
           boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)", // Subtle shadow
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
-          height: "100%", // Ensures cards are equal height
+          height: "500px", // Ensures cards are equal height
           "&:hover": {
             transform: "scale(1.05)",
             boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)", // Darker shadow on hover
@@ -235,7 +235,7 @@ const OurProducts = () => {
           alt={product.name}
           image={product.image}
           sx={{
-            height: "250px", // Fixed height for uniformity
+            //height: "250px", // Fixed height for uniformity
             objectFit: "cover", // Prevents distortion of images
             borderTopLeftRadius: "16px", 
             borderTopRightRadius: "16px",
