@@ -150,7 +150,7 @@ const products = [
     name: "Book My Game",
     details:
       "Browse and book gaming sessions online at various locations, similar to booking platforms for movies or events.",
-    image: "../assets/image/book_my_game.png",
+    image: ".../assets/image/book_my_game.png",
   },
 ];
 
