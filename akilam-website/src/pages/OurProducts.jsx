@@ -101,56 +101,56 @@ const products = [
     name: "Shuttle Pro",
     details:
       "Mobile application for online badminton booking. Easy court configuration for owners and seamless slot booking with online payment for users.",
-    image: "/assets/image/shuttle_pro.png",
+    image: "/assets/image/shuttle pro (1).png",
   },
   {
     id: 2,
     name: "Elite Kitchen",
     details:
       "Restaurant system for managing orders, configurable tables, and food/bar menus with efficient kitchen and billing management.",
-    image: "/assets/image/elitekotnew_icon.png",
+    image: "/assets/image/elitekotnew icon-modified.png",
   },
   {
     id: 3,
     name: "Order Tracking System",
     details:
       "Real-time tracking from order placement to doorstep delivery, enhancing transparency and customer experience.",
-    image: "/assets/image/order_tracking.png",
+    image: "/assets/image/qr (6).png",
   },
   {
     id: 4,
     name: "Elite POS",
     details:
       "Web-based POS for small to medium businesses to track purchases, sales, and manage simple accounts efficiently.",
-    image: "/assets/image/elite_pos.png",
+    image: "/assets/image/elitepos (2).png",
   },
   {
     id: 5,
     name: "ATS",
     details:
       "Manage recruitment with streamlined application collection, review automation, and progress tracking through hiring stages.",
-    image: "/assets/image/ats.png",
+    image: "/assets/image/qr (5).png",
   },
   {
     id: 6,
     name: "Laundry Tracking",
     details:
       "Monitor laundry orders from pickup to delivery with scheduling, tracking progress, and order notifications.",
-    image: "/assets/image/laundry_tracking.png",
+    image: "/assets/image/ots2.png",
   },
   {
     id: 7,
     name: "Registration Web App",
     details:
       "Register for events with discount code options to avail special pricing during the sign-up process.",
-    image: "/assets/image/registration_web_app.png",
+    image: "/assets/image/Book my game (1).png",
   },
   {
     id: 8,
     name: "Book My Game",
     details:
       "Browse and book gaming sessions online at various locations, similar to booking platforms for movies or events.",
-    image: ".../assets/image/book_my_game.png",
+    image: "/assets/image/Book my game.png",
   },
 ];
 
@@ -215,18 +215,83 @@ const OurProducts = () => {
         Our Products
       </Typography>
       <Grid container spacing={5} justifyContent="center">
-        {products.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={3}>
-            <Card sx={{ background: "#000", borderRadius: "5px" }}>
-              <CardMedia  alt={product.name} image={product.image} sx={{ height: "250px",width:"250px  " }} />
-              <CardContent>
-                <Typography variant="h6" sx={{ color: "#fff" }}>{product.name}</Typography>
-                <Typography variant="body2" sx={{ color: "#b0b0b0" }}>{product.details}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+  {products.map((product) => (
+    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+      <Card
+        sx={{
+          background: "#1c1c1c", // Dark background for a sleek look
+          borderRadius: "16px",  // Smooth rounded corners
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)", // Subtle shadow
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          height: "100%", // Ensures cards are equal height
+          "&:hover": {
+            transform: "scale(1.05)",
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)", // Darker shadow on hover
+          },
+        }}
+      >
+        <CardMedia
+          component="img"
+          alt={product.name}
+          image={product.image}
+          sx={{
+            height: "250px", // Fixed height for uniformity
+            objectFit: "cover", // Prevents distortion of images
+            borderTopLeftRadius: "16px", 
+            borderTopRightRadius: "16px",
+          }}
+        />
+        <CardContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            padding: "20px",
+            height: "100%",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{
+              color: "#fff",
+              fontWeight: "600",
+              marginBottom: "12px", // Space between title and description
+            }}
+          >
+            {product.name}
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#b0b0b0",
+              marginBottom: "20px", // Space before the button
+              flexGrow: 1, // Ensures description doesn't overflow or shrink
+            }}
+          >
+            {product.details}
+          </Typography>
+          <Button
+            variant="contained"
+            href="/ContactUs"
+            sx={{
+              backgroundColor: "#00b894", // Green color for button
+              "&:hover": { backgroundColor: "#00b894" },
+              borderRadius: "8px",
+              padding: "10px",
+              fontWeight: "bold",
+              textTransform: "none", // Prevents text transformation
+            }}
+            fullWidth
+          >
+            Reach Now
+          </Button>
+        </CardContent>
+      </Card>
+    </Grid>
+  ))}
+</Grid>
+
+
     </Box>
   );
 };
