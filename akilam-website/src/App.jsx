@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Courses from "./pages/Courses";
 
 function App() {
   const theme = createTheme({
@@ -38,7 +39,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/enquiry" element={<EnquiryPage />} />
+          <Route path="/contactus" element={<EnquiryPage />} />
+
+          <Route path="/Courses" element={<Courses />} />
           <Route path="/OurProducts" element={<OurProducts />} />
         </Routes>
         <Footer />
