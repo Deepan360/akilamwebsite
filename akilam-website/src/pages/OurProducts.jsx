@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Box,
+  CardMedia,
 } from "@mui/material";
 import {
   Web,
@@ -97,101 +98,82 @@ const services = [
 const products = [
   {
     id: 1,
-    name: "Premium Web App",
+    name: "Shuttle Pro",
     details:
-      "Create high-performance web apps with advanced functionalities and seamless user experiences.",
-    price: "$499",
+      "Mobile application for online badminton booking. Easy court configuration for owners and seamless slot booking with online payment for users.",
+    image: "/assets/image/shuttle_pro.png",
   },
   {
     id: 2,
-    name: "Enterprise Mobile App",
+    name: "Elite Kitchen",
     details:
-      "Develop native and cross-platform mobile apps that cater to enterprise-level requirements.",
-    price: "$899",
+      "Restaurant system for managing orders, configurable tables, and food/bar menus with efficient kitchen and billing management.",
+    image: "/assets/image/elitekotnew_icon.png",
   },
   {
     id: 3,
-    name: "Cloud Hosting",
+    name: "Order Tracking System",
     details:
-      "Get reliable, secure, and scalable cloud hosting services tailored to your business needs.",
-    price: "$299/year",
+      "Real-time tracking from order placement to doorstep delivery, enhancing transparency and customer experience.",
+    image: "/assets/image/order_tracking.png",
   },
   {
     id: 4,
-    name: "AI Analytics Suite",
+    name: "Elite POS",
     details:
-      "Leverage our AI-powered analytics suite to gain actionable insights from your business data.",
-    price: "$999",
+      "Web-based POS for small to medium businesses to track purchases, sales, and manage simple accounts efficiently.",
+    image: "/assets/image/elite_pos.png",
   },
   {
     id: 5,
-    name: "DevOps Automation",
+    name: "ATS",
     details:
-      "Enhance your CI/CD pipelines with our DevOps automation solutions for faster deployments.",
-    price: "$399",
+      "Manage recruitment with streamlined application collection, review automation, and progress tracking through hiring stages.",
+    image: "/assets/image/ats.png",
   },
   {
     id: 6,
-    name: "Custom CRM Solution",
+    name: "Laundry Tracking",
     details:
-      "Build a custom CRM to streamline your customer interactions and improve engagement.",
-    price: "$1499",
+      "Monitor laundry orders from pickup to delivery with scheduling, tracking progress, and order notifications.",
+    image: "/assets/image/laundry_tracking.png",
   },
   {
     id: 7,
-    name: "UI/UX Design Package",
+    name: "Registration Web App",
     details:
-      "Elevate your brand’s digital presence with a custom UI/UX design package.",
-    price: "$699",
+      "Register for events with discount code options to avail special pricing during the sign-up process.",
+    image: "/assets/image/registration_web_app.png",
   },
   {
     id: 8,
-    name: "E-Commerce Store",
+    name: "Book My Game",
     details:
-      "Set up a feature-rich and visually appealing e-commerce store to boost online sales.",
-    price: "$1299",
+      "Browse and book gaming sessions online at various locations, similar to booking platforms for movies or events.",
+    image: "../assets/image/book_my_game.png",
   },
-  // {
-  //   id: 9,
-  //   name: "24/7 IT Support",
-  //   details:
-  //     "Our dedicated IT support services ensure your business operations run smoothly, 24/7.",
-  //   price: "$199/month",
-  // },
 ];
-
 
 const OurProducts = () => {
   return (
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundImage:
-          "linear-gradient(to bottom,rgb(64, 34, 70),rgb(45, 33, 48,1))",
+        backgroundImage: "linear-gradient(to bottom,rgb(64, 34, 70),rgb(45, 33, 48,1))",
         padding: "80px 40px",
         color: "#fff",
       }}
     >
-      {/* Services Section */}
       <Typography
         variant="h3"
+        align="center"
         sx={{
           fontWeight: "bold",
           textTransform: "uppercase",
           letterSpacing: "2px",
           color: "#ffffff",
           marginBottom: "40px",
-          position: "relative",
-          "&:after": {
-            content: '""',
-            display: "block",
-            width: "80px",
-            height: "4px",
-            backgroundColor: "primary.main",
-            margin: "10px auto 0",
-          },
         }}
-        align="center"
       >
         Our Services
       </Typography>
@@ -200,8 +182,7 @@ const OurProducts = () => {
           <Grid item key={service.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                background:
-                  "linear-gradient(145deg, #242424, #1e1e1e, #2b2b2b)",
+                background: "#1e1e1e",
                 borderRadius: "16px",
                 boxShadow: "0 8px 20px rgba(0, 0, 0, 0.6)",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
@@ -211,47 +192,17 @@ const OurProducts = () => {
                 },
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  padding: "20px",
-                }}
-              >
+              <CardContent sx={{ textAlign: "center" }}>
                 {service.icon}
-              </Box>
-              <CardContent>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: "bold",
-                    color: "#ffffff",
-                    textAlign: "center",
-                  }}
-                >
+                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#ffffff" }}>
                   {service.title}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: "#b0b0b0",
-                    textAlign: "center",
-                    marginTop: "10px",
-                  }}
-                >
+                <Typography variant="body2" sx={{ color: "#b0b0b0", marginTop: "10px" }}>
                   {service.description}
                 </Typography>
               </CardContent>
               <Box textAlign="center" sx={{ paddingBottom: "20px" }}>
-                <Button
-                  variant="contained"
-                  href={service.link}
-                  sx={{
-                    backgroundColor: "primary.main",
-                    "&:hover": { backgroundColor: "primary.main" },
-                  }}
-                >
+                <Button variant="contained" href={service.link}>
                   Learn More
                 </Button>
               </Box>
@@ -260,88 +211,18 @@ const OurProducts = () => {
         ))}
       </Grid>
 
-      {/* Products Section */}
-      <Typography
-        variant="h3"
-        sx={{
-          fontWeight: "bold",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          color: "#ffffff",
-          margin: "60px 0 40px",
-          position: "relative",
-          "&:after": {
-            content: '""',
-            display: "block",
-            width: "80px",
-            height: "4px",
-            backgroundColor: "#1dd1a1",
-            margin: "10px auto 0",
-          },
-        }}
-        align="center"
-      >
+      <Typography variant="h3" align="center" sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}>
         Our Products
       </Typography>
-      <Grid container spacing={5} justifyContent="start">
+      <Grid container spacing={5} justifyContent="center">
         {products.map((product) => (
           <Grid item key={product.id} xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                padding: "20px",
-                background: "linear-gradient(145deg, #1f1f1f, #2c2c2c)",
-                borderRadius: "16px",
-                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 15px 35px rgba(0, 0, 0, 0.2)",
-                },
-              }}
-            >
-              <Typography
-                variant="h6"
-                sx={{
-                  fontWeight: "600",
-                  marginBottom: "10px",
-                  color: "#f2f2f2",
-                }}
-              >
-                {product.name}
-              </Typography>
-              <Typography
-                variant="body2"
-                sx={{ color: "#b3b3b3", marginBottom: "15px" }}
-              >
-                {product.details}
-              </Typography>
-              {/* <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: "600",
-                  margin: "20px 0",
-                  color: "#00b894",
-                  textAlign: "center",
-                }}
-              >
-                {product.price}
-              </Typography> */}
-              <Button
-                variant="contained"
-                href="/ContactUs"
-                sx={{
-                  backgroundColor: "#00b894",
-                  "&:hover": {
-                    backgroundColor: "#00b894",
-                  },
-                  borderRadius: "8px",
-                  padding: "10px",
-                  fontWeight: "bold",
-                }}
-                fullWidth
-              >
-                Reach Now
-              </Button>
+            <Card sx={{ background: "#000", borderRadius: "5px" }}>
+              <CardMedia  alt={product.name} image={product.image} sx={{ height: "250px",width:"250px  " }} />
+              <CardContent>
+                <Typography variant="h6" sx={{ color: "#fff" }}>{product.name}</Typography>
+                <Typography variant="body2" sx={{ color: "#b0b0b0" }}>{product.details}</Typography>
+              </CardContent>
             </Card>
           </Grid>
         ))}
