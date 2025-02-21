@@ -169,60 +169,6 @@ const OurProducts = () => {
       <Typography
         variant="h3"
         align="center"
-        sx={{
-          fontWeight: "bold",
-          textTransform: "uppercase",
-          letterSpacing: "2px",
-          color: "#ffffff",
-          marginBottom: "40px",
-        }}
-      >
-        Our Services
-      </Typography>
-      <Container>
-        <Grid container spacing={3} justifyContent="center">
-          {services.map((service) => (
-            <Grid item key={service.id} xs={12} sm={6} md={4}>
-              <Card
-                sx={{
-                  background: "#1e1e1e",
-                  borderRadius: "16px",
-                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.6)",
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: "0 12px 25px rgba(0, 0, 0, 0.8)",
-                  },
-                }}
-              >
-                <CardContent sx={{ textAlign: "center" }}>
-                  {service.icon}
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", color: "#ffffff" }}
-                  >
-                    {service.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "#b0b0b0", marginTop: "10px" }}
-                  >
-                    {service.description}
-                  </Typography>
-                </CardContent>
-                <Box textAlign="center" sx={{ paddingBottom: "20px" }}>
-                  <Button variant="contained" href={service.link}>
-                    Learn More
-                  </Button>
-                </Box>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      <Typography
-        variant="h3"
-        align="center"
         sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}
       >
         Our Products
@@ -236,12 +182,15 @@ const OurProducts = () => {
                   width: "100%",
                   height: "300px", // Adjusted for better portrait ratio
                   position: "relative",
-                  borderRadius: "5px",
+                  borderRadius: "16px",
                   background: "rgba(27, 27, 27, 0.7)", // Dark background
                   overflow: "hidden",
                   boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
                   transition: "transform 0.3s ease-in-out",
-                  "&:hover": { transform: "scale(1.05)",background: "rgba(0,0,0)"},
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    background: "rgba(0,0,0)",
+                  },
                 }}
               >
                 {/* Product Image */}
@@ -308,6 +257,54 @@ const OurProducts = () => {
                   >
                     {product.details}
                   </Typography>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+      <Typography
+        variant="h3"
+        align="center"
+        sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}
+      >
+        Our Services
+      </Typography>
+      <Container>
+        <Grid container spacing={3} justifyContent="center">
+          {services.map((service) => (
+            <Grid item key={service.id} xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  background: "#1e1e1e",
+                  borderRadius: "16px",
+                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.6)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 12px 25px rgba(0, 0, 0, 0.8)",
+                  },
+                }}
+              >
+                <CardContent sx={{ textAlign: "center" }}>
+                  {service.icon}
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#ffffff" }}
+                  >
+                    {service.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#b0b0b0", marginTop: "10px" }}
+                  >
+                    {service.description}
+                  </Typography>
+                </CardContent>
+                <Box textAlign="center" sx={{ paddingBottom: "20px" }}>
+                  <Button variant="contained" href={service.link}>
+                    Learn More
+                  </Button>
                 </Box>
               </Card>
             </Grid>
