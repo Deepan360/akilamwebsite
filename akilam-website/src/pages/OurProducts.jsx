@@ -1,4 +1,4 @@
-import React from "react";
+import "react";
 import {
   Card,
   CardContent,
@@ -7,6 +7,7 @@ import {
   Button,
   Box,
   CardMedia,
+  Container,
 } from "@mui/material";
 import {
   Web,
@@ -108,7 +109,7 @@ const products = [
     name: "Elite Kitchen",
     details:
       "Restaurant system for managing orders, configurable tables, and food/bar menus with efficient kitchen and billing management.",
-    image: "/assets/image/elitekotnew icon-modified.png",
+    image: "/assets/image/ekot.png",
   },
   {
     id: 3,
@@ -159,7 +160,8 @@ const OurProducts = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundImage: "linear-gradient(to bottom,rgb(64, 34, 70),rgb(45, 33, 48,1))",
+        backgroundImage:
+          "linear-gradient(to bottom,rgb(64, 34, 70),rgb(45, 33, 48,1))",
         padding: "80px 40px",
         color: "#fff",
       }}
@@ -177,121 +179,141 @@ const OurProducts = () => {
       >
         Our Services
       </Typography>
-      <Grid container spacing={5} justifyContent="center">
-        {services.map((service) => (
-          <Grid item key={service.id} xs={12} sm={6} md={4}>
-            <Card
-              sx={{
-                background: "#1e1e1e",
-                borderRadius: "16px",
-                boxShadow: "0 8px 20px rgba(0, 0, 0, 0.6)",
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0 12px 25px rgba(0, 0, 0, 0.8)",
-                },
-              }}
-            >
-              <CardContent sx={{ textAlign: "center" }}>
-                {service.icon}
-                <Typography variant="h6" sx={{ fontWeight: "bold", color: "#ffffff" }}>
-                  {service.title}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#b0b0b0", marginTop: "10px" }}>
-                  {service.description}
-                </Typography>
-              </CardContent>
-              <Box textAlign="center" sx={{ paddingBottom: "20px" }}>
-                <Button variant="contained" href={service.link}>
-                  Learn More
-                </Button>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      <Typography variant="h3" align="center" sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}>
+      <Container>
+        <Grid container spacing={3} justifyContent="center">
+          {services.map((service) => (
+            <Grid item key={service.id} xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  background: "#1e1e1e",
+                  borderRadius: "16px",
+                  boxShadow: "0 8px 20px rgba(0, 0, 0, 0.6)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0 12px 25px rgba(0, 0, 0, 0.8)",
+                  },
+                }}
+              >
+                <CardContent sx={{ textAlign: "center" }}>
+                  {service.icon}
+                  <Typography
+                    variant="h6"
+                    sx={{ fontWeight: "bold", color: "#ffffff" }}
+                  >
+                    {service.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "#b0b0b0", marginTop: "10px" }}
+                  >
+                    {service.description}
+                  </Typography>
+                </CardContent>
+                <Box textAlign="center" sx={{ paddingBottom: "20px" }}>
+                  <Button variant="contained" href={service.link}>
+                    Learn More
+                  </Button>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+      <Typography
+        variant="h3"
+        align="center"
+        sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}
+      >
         Our Products
       </Typography>
-      <Grid container spacing={5} justifyContent="center">
-  {products.map((product) => (
-    <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-      <Card
-        sx={{
-          background: "#1c1c1c", // Dark background for a sleek look
-          borderRadius: "16px",  // Smooth rounded corners
-          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)", // Subtle shadow
-          transition: "transform 0.3s ease, box-shadow 0.3s ease",
-          height: "500px", // Ensures cards are equal height
-          "&:hover": {
-            transform: "scale(1.05)",
-            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)", // Darker shadow on hover
-          },
-        }}
-      >
-        <CardMedia
-          component="img"
-          alt={product.name}
-          image={product.image}
-          sx={{
-            //height: "250px", // Fixed height for uniformity
-            objectFit: "cover", // Prevents distortion of images
-            borderTopLeftRadius: "16px", 
-            borderTopRightRadius: "16px",
-          }}
-        />
-        <CardContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            padding: "20px",
-            height: "100%",
-          }}
-        >
-          <Typography
-            variant="h6"
-            sx={{
-              color: "#fff",
-              fontWeight: "600",
-              marginBottom: "12px", // Space between title and description
-            }}
-          >
-            {product.name}
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#b0b0b0",
-              marginBottom: "20px", // Space before the button
-              flexGrow: 1, // Ensures description doesn't overflow or shrink
-            }}
-          >
-            {product.details}
-          </Typography>
-          <Button
-            variant="contained"
-            href="/ContactUs"
-            sx={{
-              backgroundColor: "#00b894", // Green color for button
-              "&:hover": { backgroundColor: "#00b894" },
-              borderRadius: "8px",
-              padding: "10px",
-              fontWeight: "bold",
-              textTransform: "none", // Prevents text transformation
-            }}
-            fullWidth
-          >
-            Reach Now
-          </Button>
-        </CardContent>
-      </Card>
-    </Grid>
-  ))}
-</Grid>
+      <Container>
+        <Grid container spacing={4} justifyContent="center">
+          {products.map((product) => (
+            <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
+              <Card
+                sx={{
+                  width: "100%",
+                  height: "300px", // Adjusted for better portrait ratio
+                  position: "relative",
+                  borderRadius: "5px",
+                  background: "rgba(27, 27, 27, 0.7)", // Dark background
+                  overflow: "hidden",
+                  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+                  transition: "transform 0.3s ease-in-out",
+                  "&:hover": { transform: "scale(1.05)",background: "rgba(0,0,0)"},
+                }}
+              >
+                {/* Product Image */}
+                <CardMedia
+                  component="img"
+                  image={product.image}
+                  alt={product.name}
+                  sx={{
+                    width: "100%",
+                    height: "auto", // Ensures full coverage
+                    objectFit: "contain",
+                    transition: "opacity 0.4s ease-in-out",
+                  }}
+                />
 
+                {/* Product Name (Always Visible) */}
+                <Box
+                  sx={{
+                    position: "absolute",
 
+                    width: "100%",
+                    background: "rgba(27, 27, 27, 0.7)", // Dark background
+                    color: "#fff",
+                    padding: "5px",
+                    textAlign: "center",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    zIndex: 2, // Ensures visibility over hover effect
+                  }}
+                >
+                  {product.name}
+                </Box>
+
+                {/* Hover Overlay for Details */}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    background: "rgba(0, 0, 0, 0.7)", // Dark overlay
+                    opacity: 0,
+                    transition: "opacity 0.4s ease-in-out",
+                    padding: "2px",
+                    "&:hover": { opacity: 1 }, // Show on hover
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#f5f5f5",
+                      fontSize: "16px",
+                      fontWeight: "500",
+                      maxWidth: "100%",
+                      lineHeight: "1.5",
+                      textAlign: "center",
+                    }}
+                  >
+                    {product.details}
+                  </Typography>
+                </Box>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
     </Box>
   );
 };
