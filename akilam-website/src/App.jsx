@@ -7,12 +7,14 @@ import HomePage from "./pages/HomePage";
 import AboutUs from "./pages/AboutUs";
 import EnquiryPage from "./pages/EnquiryPage";
 import OurProducts from "./pages/OurProducts";
+import Courses from "./pages/Courses";
 import "./App.css";
 import Footer from "./components/Footer";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Courses from "./pages/Courses";
+import ScrollToTop from "./components/ScrollToTop"; // Import the component
 
 function App() {
   const theme = createTheme({
@@ -29,6 +31,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <ScrollToTop />
         {/* Header at the top of the page */}
         <Header />
 

@@ -13,7 +13,7 @@ const Footer = () => {
   ];
 
   return (
-    <Box sx={{ backgroundColor: "#000", color: "#fff", padding: "60px 0" }}>
+    <Box sx={{ backgroundColor: "#000", color: "#fff", padding: " 10px" }}>
       <Grid container spacing={4} justifyContent="center">
         {/* Quick Links Section */}
         <Grid item xs={12} sm={4} md={3} sx={{ textAlign: "center" }}>
@@ -122,7 +122,8 @@ const Footer = () => {
               },
             }}
           >
-            D-25 10th Cross West Extn.,Thillai Nagar, Trichy TN 620018
+            T-4, THIRD FLOOR, JC TOWER, KARUR BYPASS ROAD, ANNAMALAI NAGAR,
+            Trichy TN 620018
           </Typography>
         </Grid>
 

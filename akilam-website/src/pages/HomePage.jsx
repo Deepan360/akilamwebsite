@@ -214,7 +214,7 @@ const HomePage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000); // Change every 1 seconds
+    }, 1500); // Change every 1.5 seconds
     return () => clearInterval(interval);
   }, [images.length]);
   return (

@@ -12,16 +12,17 @@ import {
   Lightbulb as MissionIcon,
   TrendingUp as ActionIcon,
   Group as TeamIcon,
-  Public as ImpactIcon,
+  Public as ImpactIcon, 
 } from "@mui/icons-material";
 
 const About = () => {
   return (
     <Box
       sx={{
-        background: "linear-gradient(#000,rgb(25, 40, 71))",
-        color: "#c9d1d9",
+        background: "linear-gradient(rgb(26, 36, 54),rgb(25, 40, 71))",
+        color: "#fff",
         minHeight: "100vh",
+        paddingBottom: 5,
       }}
     >
       {/* Section Header */}
@@ -30,7 +31,7 @@ const About = () => {
           textAlign: "center",
           py: 5,
           height: "70vh",
-          backgroundImage: "url('/public/assets/image/office.jpg')",
+          backgroundImage: "url('/assets/image/office.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -48,13 +49,13 @@ const About = () => {
             height: "82vh",
             right: 0,
             bottom: 0,
-            background: "rgba(0, 0, 0, 0.2)", // Dark overlay effect
+            background: "rgba(0, 0, 0, 0.5)", // Dark overlay effect
             zIndex: 1,
           },
           zIndex: 2,
         }}
       >
-        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2 }}>
+        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, zIndex: 3 }}>
           About Us
         </Typography>
         <Typography
@@ -65,6 +66,7 @@ const About = () => {
             mx: "auto",
             fontSize: "1.2rem",
             fontWeight: "bold",
+            zIndex: 3,
           }}
         >
           We strive to create impactful solutions that enhance businesses, solve
