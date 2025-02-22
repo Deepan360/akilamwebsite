@@ -13,9 +13,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
 } from "@mui/material";
-import PropTypes from 'prop-types';
 
 import { useNavigate } from "react-router-dom";
 
@@ -327,30 +325,23 @@ const courses = [
     ],
   },
 ];
-
 const Courses = () => {
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const navigate = useNavigate(); // Hook for navigation
 
   const handleOpenModal = (course) => {
     setSelectedCourse(course);
-    setOpen(true);
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {
-    setOpen(false);
+    setOpenModal(false);
     setSelectedCourse(null);
   };
 
   return (
-    <Box
-      sx={{
-        background: "linear-gradient(rgb(26, 36, 54),rgb(25, 40, 71))",
-        color: "#fff",
-        minHeight: "100vh",
-        paddingBottom: 5,
-      }}
-    >
+    <Box sx={{ background: "#1b2c50", color: "#c9d1d9", minHeight: "100vh" }}>
       <Container
         sx={{
           paddingTop: "80px",
@@ -437,157 +428,7 @@ const Courses = () => {
           </div>
         ))}
         {/* Modal */}
-        <ContactFormModal
-          open={open}
-          handleClose={handleCloseModal}
-          selectedCourse={selectedCourse}
-          handleOpenModal={handleOpenModal}
-        />
-      </Container>
-    </Box>
-  );
-};
-
-const ContactFormModal = ({ open, handleClose, selectedCourse }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    mobile: "",
-    message: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = () => {
-    const { firstName, lastName, email, mobile, message } = formData;
-
-    // Basic validation
-    if (!firstName || !lastName || !email || !mobile || !message) {
-      alert("Please fill in all fields.");
-      return;
-    }
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      alert("Enter a valid email address.");
-      return;
-    }
-    if (!/^\d{10}$/.test(mobile)) {
-      alert("Enter a valid 10-digit mobile number.");
-      return;
-    }
-
-    // Open default mail client with filled details
-    const mailtoLink = `mailto:info@example.com?subject=Inquiry about ${selectedCourse?.title}&body=Hello,%0D%0A%0D%0A
-      I am ${firstName} ${lastName}.%0D%0A
-      Email: ${email}%0D%0A
-      Mobile: ${mobile}%0D%0A
-      Course Interested: ${selectedCourse?.title}%0D%0A
-      Message: ${message}%0D%0A
-      Regards,%0D%0A${firstName}`;
-
-    window.location.href = mailtoLink;
-  };
-
-  return (
-    <Box
-      sx={{
-        background: "linear-gradient(rgb(26, 36, 54),rgb(25, 40, 71))",
-        color: "#fff",
-        minHeight: "100vh",
-        paddingBottom: 5,
-      }}
-    >
-      <Container
-        sx={{
-          paddingTop: "80px",
-          paddingBottom: "80px",
-
-          color: "#fff",
-        }}
-      >
-        <Typography
-          variant="h4"
-          align="center"
-          sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
-        >
-          Explore Our Courses
-        </Typography>
-        {courses.map((category, index) => (
-          <div key={index}>
-            <Typography
-              variant="h5"
-              sx={{ mt: 3, mb: 3, color: "#fff", fontWeight: "bold" }}
-            >
-              {category.category}
-            </Typography>
-            <Grid container spacing={3}>
-              {category.courses.map((course, idx) => (
-                <Grid item key={idx} xs={12} sm={6} md={4}>
-                  <Card
-                    sx={{
-                      background: "#1E1E1E",
-                      color: "#fff",
-
-                      borderRadius: "12px",
-                      boxShadow: "0px 4px 15px rgba(255, 255, 255, 0.15)",
-                      transition: "0.3s ease-in-out",
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                      "&:hover": {
-                        boxShadow: "0px 4px 20px #ae3a94", // Use primary color for hover effect
-                        transform: "scale(1.05)",
-                      },
-                    }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      sx={{ objectFit: "contain", background: "#fff" }}
-                      image={course.imageUrl}
-                      alt={course.title}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography
-                        variant="h6"
-                        sx={{ fontWeight: "bold", color: "primary.main" }} // Heading uses primary color
-                      >
-                        {course.title}
-                      </Typography>
-                      <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
-                        {course.description}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Duration:</strong> {course.duration}
-                      </Typography>
-                      {/* <Typography variant="body2">
-                        <strong>Rating:</strong> {course.rating} ⭐
-                      </Typography> */}
-                    </CardContent>
-                    <Button
-                      // eslint-disable-next-line no-undef
-                      onClick={() => handleOpenModal(course)}
-                      sx={{
-                        width: "100%",
-                        backgroundColor: "primary.main", // Primary color for button
-                        color: "#fff",
-                        borderRadius: "0px 0px 12px 12px",
-                        fontWeight: "bold",
-                        "&:hover": { backgroundColor: "secondary.main" }, // Secondary color on hover
-                      }}
-                    >
-                      Contact Us
-                    </Button>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        ))}
-        {/* Modal */}
-        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+        <Dialog open={openModal} onClose={handleCloseModal}>
           <DialogTitle
             sx={{
               background: "#1E1E1E",
@@ -597,113 +438,56 @@ const ContactFormModal = ({ open, handleClose, selectedCourse }) => {
           >
             Enroll in {selectedCourse?.title}
           </DialogTitle>
-
-          <DialogContent
-            sx={{
-              background: "#1E1E1E",
-              color: "#fff",
-              paddingBottom: 2,
-              borderColor: "primary.main",
-            }}
-          >
+          <DialogContent sx={{ background: "#1E1E1E", color: "#fff" }}>
             <Typography variant="body1">
               {selectedCourse?.description}
             </Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
               <strong>Duration:</strong> {selectedCourse?.duration}
             </Typography>
-
+            {/* <Typography variant="body2">
+              <strong>Rating:</strong> {selectedCourse?.rating} ⭐
+            </Typography> */}
             <Box
-              sx={{ mt: 3, padding: 2, borderRadius: 2, background: "#f1f2f3" }}
+              sx={{
+                mt: 3,
+                background: "primary.main", // Use theme primary color
+                padding: "10px",
+                borderRadius: "8px",
+                textAlign: "center",
+              }}
             >
               <Typography
                 variant="subtitle1"
-                sx={{ color: "#000", fontWeight: "bold" }}
+                sx={{ color: "#fff", fontWeight: "bold" }}
               >
-                Fill in your details to contact us!
+                Interested? Contact us for more details!
               </Typography>
-
-              <Box sx={{ mt: 2, display: "flex", gap: 1 }}>
-                <TextField
-                  name="firstName"
-                  label="First Name"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  sx={{ input: { color: "#000" } }}
-                />
-                <TextField
-                  name="lastName"
-                  label="Last Name"
-                  variant="outlined"
-                  fullWidth
-                  onChange={handleChange}
-                  sx={{ input: { color: "#000" } }}
-                />
-              </Box>
-
-              <TextField
-                name="email"
-                label="Email"
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 2, input: { color: "#000" } }}
-                onChange={handleChange}
-              />
-              <TextField
-                name="mobile"
-                label="Mobile Number"
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 2, input: { color: "#000" } }}
-                onChange={handleChange}
-              />
-              <TextField
-                name="message"
-                label="Your Message"
-                variant="outlined"
-                multiline
-                rows={3}
-                fullWidth
-                sx={{ mt: 2, input: { color: "#000" } }}
-                onChange={handleChange}
-              />
             </Box>
           </DialogContent>
-
-          <DialogActions sx={{ background: "#1E1E1E", padding: "16px" }}>
+          <DialogActions sx={{ background: "#1E1E1E" }}>
             <Button
-              onClick={handleClose}
+              onClick={handleCloseModal}
               sx={{ color: "secondary.main", fontWeight: "bold" }}
             >
-              Cancel
+              Close
             </Button>
             <Button
-              onClick={handleSubmit}
+              onClick={() => navigate("/contactus")}
               sx={{
                 backgroundColor: "primary.main",
                 color: "#fff",
                 fontWeight: "bold",
-                "&:hover": { backgroundColor: "#1565C0" },
+                "&:hover": { backgroundColor: "primary.main" },
               }}
             >
-              Send Inquiry
+              Contact Us
             </Button>
           </DialogActions>
         </Dialog>
       </Container>
     </Box>
   );
-};
-
-ContactFormModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  selectedCourse: PropTypes.shape({
-    title: PropTypes.string,
-    description: PropTypes.string,
-    duration: PropTypes.string,
-  }),
 };
 
 export default Courses;
