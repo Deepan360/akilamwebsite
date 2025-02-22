@@ -55,7 +55,11 @@ const About = () => {
           zIndex: 2,
         }}
       >
-        <Typography variant="h3" sx={{ fontWeight: "bold", mb: 2, zIndex: 3 }}>
+        <Typography
+          variant="h4"
+          align="center"
+          sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8",zIndex: 3 }}
+        >
           About Us
         </Typography>
         <Typography

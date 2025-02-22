@@ -161,15 +161,15 @@ const OurProducts = () => {
       sx={{
         minHeight: "100vh",
         backgroundImage:
-          "linear-gradient(to bottom,rgb(64, 34, 70),rgb(45, 33, 48,1))",
+          "linear-gradient(to bottom,rgb(87, 44, 97),rgb(87, 44, 97))",
         padding: "80px 40px",
         color: "#fff",
       }}
     >
       <Typography
-        variant="h3"
+        variant="h4"
         align="center"
-        sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}
+        sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
       >
         Our Products
       </Typography>
@@ -264,9 +264,9 @@ const OurProducts = () => {
         </Grid>
       </Container>
       <Typography
-        variant="h3"
+        variant="h4"
         align="center"
-        sx={{ marginTop: "60px", marginBottom: "40px", color: "#ffffff" }}
+        sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
       >
         Our Services
       </Typography>

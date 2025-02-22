@@ -8,6 +8,7 @@ import AboutUs from "./pages/AboutUs";
 import EnquiryPage from "./pages/EnquiryPage";
 import OurProducts from "./pages/OurProducts";
 import Courses from "./pages/Courses";
+import TeamPage from "./pages/TeamPage";
 import "./App.css";
 import Footer from "./components/Footer";
 
@@ -43,7 +44,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<EnquiryPage />} />
-
+          <Route path="/TeamPage" element={<TeamPage />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/OurProducts" element={<OurProducts />} />
         </Routes>

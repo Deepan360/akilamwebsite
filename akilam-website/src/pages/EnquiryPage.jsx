@@ -128,9 +128,8 @@ const EnquiryPage = () => {
           >
             <Typography
               variant="h4"
-              gutterBottom
-              sx={{ textAlign: "center" }}
-              color="primary.main"
+              align="center"
+              sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
             >
               Contact Information
             </Typography>
@@ -202,9 +201,8 @@ const EnquiryPage = () => {
             <Box sx={{ width: "100%", marginBottom: "10px" }}>
               <Typography
                 variant="h4"
-                gutterBottom
                 align="center"
-                color="primary.main"
+                sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
               >
                 Enquiry Form
               </Typography>

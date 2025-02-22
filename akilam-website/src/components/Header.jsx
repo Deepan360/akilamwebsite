@@ -16,7 +16,7 @@ const pages = [
   { name: "About Us", route: "/AboutUs" },
   { name: "OurProducts", route: "/OurProducts" },
   { name: "Courses", route: "/courses" },
-  { name: "Team", route: "/Courses" },
+  { name: "Team", route: "/TeamPage" },
   { name: "ContactUs", route: "/ContactUs" },
 ];
 
@@ -54,7 +54,7 @@ const Header = () => {
       sx={{
         backgroundColor: scrolling ? "primary.main" : "transparent",
         transition: "background-color 0.3s ease",
-        boxShadow: scrolling ? "0px 4px 10px rgba(0, 0, 0, 0.1)" : "none",
+        boxShadow: scrolling ? "0px 4px 15px 20px rgba(0, 0, 0, 0.3)" : "none",
         color: scrolling ? "#fff" : "#fff",
       }}
     >
