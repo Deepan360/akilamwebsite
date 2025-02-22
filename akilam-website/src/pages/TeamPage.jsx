@@ -22,7 +22,7 @@ const teamMembers = [
   {
     name: "Jai Rangachari",
     role: "Chief Operating Officer/Director",
-    image: "public/team/jai.png",
+    image: "/team/jai.png",
     bio: "Expert in operations and strategic planning.",
     category: "Leadership & Management Team",
   },
@@ -30,14 +30,14 @@ const teamMembers = [
   {
     name: "Abdul Basheer",
     role: "Senior Developer",
-    image: "public/team/dummy.avif",
+    image: "/team/dummy.png",
     bio: "Expert in software development and AI-driven solutions.",
     category: "Technology",
   },
   {
     name: "Raveendar",
     role: "Senior Developer",
-    image: "public/team/dummy.avif",
+    image: "/team/dummy.png",
     bio: "Expert in software development and AI-driven solutions.",
     category: "Technology",
   },

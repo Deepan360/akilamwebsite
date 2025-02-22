@@ -390,12 +390,8 @@ const HomePage = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h4"
-            sx={{
-              textAlign: "center",
-              fontWeight: 700,
-              color: "#fff",
-              mb: 6,
-            }}
+            align="center"
+            sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
           >
             Why Choose Us?
           </Typography>
@@ -494,14 +490,9 @@ const HomePage = () => {
         <Container maxWidth="lg">
           <Fade bottom>
             <Typography
-              variant="h3"
-              sx={{
-                textAlign: "center",
-                fontWeight: 700,
-                color: "primary",
-                mb: 6,
-                fontFamily: "'Roboto', sans-serif",
-              }}
+              variant="h4"
+              align="center"
+              sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
             >
               What Our Clients Are Saying
             </Typography>
@@ -607,15 +598,9 @@ const HomePage = () => {
           sx={{ position: "relative", zIndex: 1, overflow: "hidden" }}
         >
           <Typography
-            variant="h3"
-            sx={{
-              textAlign: "center",
-              fontWeight: 500,
-              color: "#fff",
-              paddingY: "20px",
-              mb: 6,
-              fontFamily: "'Roboto', sans-serif",
-            }}
+            variant="h4"
+            align="center"
+            sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
           >
             Our Technology Stack
           </Typography>
@@ -780,13 +765,8 @@ const HomePage = () => {
         <Container maxWidth="md">
           <Typography
             variant="h4"
-            sx={{
-              textAlign: "center",
-              fontWeight: 600,
-              marginBottom: 4,
-              color: "#f0f0f0", // Light text for dark theme
-              fontFamily: "'Roboto', sans-serif",
-            }}
+            align="center"
+            sx={{ fontWeight: "bold", mb: 4, color: "#f8f8f8" }}
           >
             Frequently Asked Questions
           </Typography>
@@ -856,7 +836,6 @@ const HomePage = () => {
           ))}
         </Container>
       </Box>
-    
     </Box>
   );
 };
