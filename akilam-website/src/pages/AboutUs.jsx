@@ -68,8 +68,8 @@ const About = () => {
             color: "#fff",
             maxWidth: "900px",
             mx: "auto",
-            fontSize: "1.2rem",
-            fontWeight: "bold",
+            
+          
             zIndex: 3,
           }}
         >
