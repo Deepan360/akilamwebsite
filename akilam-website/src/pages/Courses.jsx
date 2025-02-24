@@ -369,11 +369,14 @@ const handleSubmit = async (e) => {
     course: selectedCourse?.title || "No Course Selected",
   };
   try {
-    const response = await fetch("http://localhost:5987/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(finalFormData),
-    });
+    const response = await fetch(
+      "https://akilamwebserver.onrender.com/send-email",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(finalFormData),
+      }
+    );
 
     const result = await response.json();
     if (result.success) {
@@ -779,7 +782,7 @@ const handleSubmit = async (e) => {
                       },
                       "& .MuiInputLabel-root": { color: "#fff" },
                       "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
+                        color: "#fff",
                       },
                     }}
                   />
