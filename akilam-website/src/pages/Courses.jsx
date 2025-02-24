@@ -13,10 +13,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField
+  TextField,
+  Snackbar,
+  Alert
 } from "@mui/material";
 
-import Popover from "@mui/material/Popover";
 
 
 import { useNavigate } from "react-router-dom";
@@ -348,6 +349,7 @@ const Courses = () => {
     message: "",
   });
 
+const [loading, setLoading] = useState(false);
 
   // Handle form field changes
   const handleChange = (e) => {
@@ -360,27 +362,14 @@ const Courses = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  setAnchorEl(null); // Reset popover
-
-  // Validate required fields
-  const requiredFields = ["firstName", "lastName", "dob", "mobile", "email"];
-  const emptyFields = requiredFields.filter((field) => !formData[field]);
-
-  if (emptyFields.length > 0) {
-    setPopoverMessage("Please fill in all required fields.");
-    setPopoverType("error");
-    setAnchorEl(e.currentTarget); // Show popover
-    setTimeout(() => setAnchorEl(null), 3000); // Hide popover after 3 sec
-    return;
-  }
-
-  const finalFormData = {
+  setLoading(true); // Start loading
+  setAnchorEl(null);
+ const finalFormData = {
     ...formData,
     course: selectedCourse?.title || "No Course Selected",
   };
-
   try {
-    const response = await fetch("http://localhost:5000/send-email", {
+    const response = await fetch("http://localhost:5987/send-email", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(finalFormData),
@@ -388,30 +377,37 @@ const handleSubmit = async (e) => {
 
     const result = await response.json();
     if (result.success) {
-      setPopoverMessage("Your message has been sent successfully!");
+      setPopoverMessage("Your successfully Registered!");
       setPopoverType("success");
-      setOpenContactModal(false);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        dob: "",
-        mobile: "",
-        email: "",
-        message: "",
-      });
+
+      setTimeout(() => {
+        setOpenContactModal(false);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          dob: "",
+          mobile: "",
+          email: "",
+          message: "",
+        });
+      }, 1000);
     } else {
-      setPopoverMessage("Failed to send the message. Please try again later.");
+      setPopoverMessage("Failed to send the message. Please try again.");
       setPopoverType("error");
     }
   } catch (error) {
     console.error("Error:", error);
     setPopoverMessage("Error sending message.");
     setPopoverType("error");
+  } finally {
+    setLoading(false); // Stop loading
+    // Show popover without anchor
+    setTimeout(() => setPopoverMessage(""), 3000);
+    setOpenModal(false);
   }
-
-  setAnchorEl(e.currentTarget); // Show popover
-  setTimeout(() => setAnchorEl(null), 3000); // Hide popover after 3 sec
 };
+
+
 
 
 
@@ -781,7 +777,7 @@ const handleSubmit = async (e) => {
                         color: "#fff",
                         fontSize: { xs: "0.9rem", sm: "1rem" },
                       },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root": { color: "#fff" },
                       "& .MuiInputLabel-root.Mui-focused": {
                         color: "primary.main",
                       },
@@ -794,24 +790,27 @@ const handleSubmit = async (e) => {
               <Button
                 type="submit"
                 fullWidth
-                onClick={handleSubmit}
                 sx={{
-                  backgroundColor: "primary.main",
-                  color: "#1E1E1E",
+                  backgroundColor: loading ? "grey.600" : "primary.main",
+                  color: loading ? "grey.300" : "#1E1E1E",
                   fontWeight: "bold",
                   fontSize: { xs: "1rem", sm: "1.1rem" },
                   mt: 3,
                   py: 1.5,
                   borderRadius: "8px",
-                  boxShadow: "0px 4px 8px rgba(249, 38, 221, 0.3)",
+                  boxShadow: loading
+                    ? "none"
+                    : "0px 4px 8px rgba(249, 38, 221, 0.3)",
                   transition: "0.3s",
+                  cursor: loading ? "not-allowed" : "pointer",
                   "&:hover": {
-                    backgroundColor: "secondary.main",
-                    transform: "translateY(-2px)",
+                    backgroundColor: loading ? "grey.600" : "secondary.main",
+                    transform: loading ? "none" : "translateY(-2px)",
                   },
                 }}
+                disabled={loading}
               >
-                🚀 Send Message
+                {loading ? "Sending..." : "🚀 Send Message"}
               </Button>
             </Box>
           </DialogContent>
@@ -834,24 +833,20 @@ const handleSubmit = async (e) => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Popover
-          open={Boolean(anchorEl)}
-          anchorEl={anchorEl}
-          onClose={() => setAnchorEl(null)}
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          transformOrigin={{ vertical: "top", horizontal: "center" }}
+        <Snackbar
+          open={!!popoverMessage}
+          autoHideDuration={3000}
+          onClose={() => setPopoverMessage("")}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }} // Show at top center
         >
-          <Typography
-            sx={{
-              p: 2,
-              backgroundColor: popoverType === "error" ? "red" : "green",
-              color: "white",
-              borderRadius: "6px",
-            }}
+          <Alert
+            onClose={() => setPopoverMessage("")}
+            severity={popoverType}
+            variant="filled"
           >
             {popoverMessage}
-          </Typography>
-        </Popover>
+          </Alert>
+        </Snackbar>
       </Container>
     </Box>
   );
