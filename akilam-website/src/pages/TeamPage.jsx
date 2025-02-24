@@ -92,7 +92,7 @@ const TeamPage = () => {
                   item
                   xs={12}
                   sm={6}
-                  md={4}
+                  md={3}
                   key={idx}
                   sx={{ display: "flex", justifyContent: "center" }}
                 >

@@ -13,10 +13,14 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  TextField
 } from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
+import Popover from "@mui/material/Popover";
 
+
+import { useNavigate } from "react-router-dom";
+ 
 // Categorized Course Data
 const courses = [
   {
@@ -334,6 +338,82 @@ const Courses = () => {
     setSelectedCourse(course);
     setOpenModal(true);
   };
+  const [openContactModal, setOpenContactModal] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dob: "",
+    mobile: "",
+    email: "",
+    message: "",
+  });
+
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [popoverMessage, setPopoverMessage] = useState("");
+  const [popoverType, setPopoverType] = useState("error"); // "success" or "error"
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setAnchorEl(null); // Reset popover
+
+  // Validate required fields
+  const requiredFields = ["firstName", "lastName", "dob", "mobile", "email"];
+  const emptyFields = requiredFields.filter((field) => !formData[field]);
+
+  if (emptyFields.length > 0) {
+    setPopoverMessage("Please fill in all required fields.");
+    setPopoverType("error");
+    setAnchorEl(e.currentTarget); // Show popover
+    setTimeout(() => setAnchorEl(null), 3000); // Hide popover after 3 sec
+    return;
+  }
+
+  const finalFormData = {
+    ...formData,
+    course: selectedCourse?.title || "No Course Selected",
+  };
+
+  try {
+    const response = await fetch("http://localhost:5000/send-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(finalFormData),
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      setPopoverMessage("Your message has been sent successfully!");
+      setPopoverType("success");
+      setOpenContactModal(false);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        dob: "",
+        mobile: "",
+        email: "",
+        message: "",
+      });
+    } else {
+      setPopoverMessage("Failed to send the message. Please try again later.");
+      setPopoverType("error");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    setPopoverMessage("Error sending message.");
+    setPopoverType("error");
+  }
+
+  setAnchorEl(e.currentTarget); // Show popover
+  setTimeout(() => setAnchorEl(null), 3000); // Hide popover after 3 sec
+};
+
+
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -445,13 +525,10 @@ const Courses = () => {
             <Typography variant="body2" sx={{ mt: 2 }}>
               <strong>Duration:</strong> {selectedCourse?.duration}
             </Typography>
-            {/* <Typography variant="body2">
-              <strong>Rating:</strong> {selectedCourse?.rating} ⭐
-            </Typography> */}
             <Box
               sx={{
                 mt: 3,
-                background: "primary.main", // Use theme primary color
+                background: "primary.main",
                 padding: "10px",
                 borderRadius: "8px",
                 textAlign: "center",
@@ -473,18 +550,308 @@ const Courses = () => {
               Close
             </Button>
             <Button
-              onClick={() => navigate("/contactus")}
+              onClick={() => setOpenContactModal(true)} // Open contact form modal
               sx={{
                 backgroundColor: "primary.main",
                 color: "#fff",
                 fontWeight: "bold",
-                "&:hover": { backgroundColor: "primary.main" },
+                "&:hover": { backgroundColor: "primary.dark" },
               }}
             >
-              Contact Us
+              Register Now
             </Button>
           </DialogActions>
         </Dialog>
+        {/* Contact Form Modal */}
+        <Dialog
+          open={openContactModal}
+          onClose={() => setOpenContactModal(false)}
+          maxWidth="sm"
+          fullWidth
+        >
+          {/* Modal Header */}
+          <DialogTitle
+            sx={{
+              background: "#121212",
+              color: "primary.main",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: { xs: "1.2rem", sm: "1.5rem" },
+              py: 2,
+            }}
+          >
+            📩 Get in Touch
+          </DialogTitle>
+
+          {/* Modal Content */}
+          <DialogContent
+            sx={{
+              background: "#1E1E1E",
+              color: "#fff",
+              px: { xs: 2, sm: 4 },
+              pb: 3,
+            }}
+          >
+            <Typography
+              variant="body2"
+              sx={{ textAlign: "center", py: 2, color: "grey.300" }}
+            >
+              Fill out the form below, and we’ll get back to you soon!
+            </Typography>
+
+            <Box
+              component="form"
+              onSubmit={handleSubmit}
+              noValidate
+              sx={{
+                backgroundColor: "#2E2E2E",
+                padding: { xs: "16px", sm: "24px" },
+                borderRadius: "10px",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+              }}
+            >
+              <Grid container spacing={2}>
+                {/* Selected Course */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Selected Course"
+                    variant="filled"
+                    fullWidth
+                    name="course"
+                    value={selectedCourse?.title || ""}
+                    InputProps={{ readOnly: true }}
+                    sx={{
+                      backgroundColor: "#f1f1f1",
+                      color: "primary.main",
+                      borderRadius: "6px",
+                      input: {
+                        color: "primary.main",
+                        fontWeight: "bold",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                    }}
+                  />
+                </Grid>
+
+                {/* First Name & Last Name (Stacked on Mobile) */}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="First Name"
+                    variant="filled"
+                    fullWidth
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Last Name"
+                    variant="filled"
+                    fullWidth
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+
+                {/* Date of Birth */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Date of Birth"
+                    variant="filled"
+                    fullWidth
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    required
+                    InputLabelProps={{ shrink: true }}
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+
+                {/* Mobile Number */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Mobile Number"
+                    variant="filled"
+                    fullWidth
+                    type="tel"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleChange}
+                    required
+                    inputProps={{ maxLength: 10, pattern: "[0-9]{10}" }}
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+
+                {/* Email ID */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Email ID"
+                    variant="filled"
+                    fullWidth
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+
+                {/* Message Field */}
+                <Grid item xs={12}>
+                  <TextField
+                    label="Message"
+                    variant="filled"
+                    fullWidth
+                    multiline
+                    rows={3}
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    sx={{
+                      backgroundColor: "#333",
+                      borderRadius: "6px",
+                      input: {
+                        color: "#fff",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                      },
+                      "& .MuiInputLabel-root": { color: "grey.400" },
+                      "& .MuiInputLabel-root.Mui-focused": {
+                        color: "primary.main",
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                fullWidth
+                onClick={handleSubmit}
+                sx={{
+                  backgroundColor: "primary.main",
+                  color: "#1E1E1E",
+                  fontWeight: "bold",
+                  fontSize: { xs: "1rem", sm: "1.1rem" },
+                  mt: 3,
+                  py: 1.5,
+                  borderRadius: "8px",
+                  boxShadow: "0px 4px 8px rgba(249, 38, 221, 0.3)",
+                  transition: "0.3s",
+                  "&:hover": {
+                    backgroundColor: "secondary.main",
+                    transform: "translateY(-2px)",
+                  },
+                }}
+              >
+                🚀 Send Message
+              </Button>
+            </Box>
+          </DialogContent>
+
+          {/* Close Button */}
+          <DialogActions
+            sx={{ background: "#121212", justifyContent: "center", pb: 2 }}
+          >
+            <Button
+              onClick={() => setOpenContactModal(false)}
+              sx={{
+                color: "grey.400",
+                fontWeight: "bold",
+                textTransform: "none",
+                fontSize: { xs: "0.9rem", sm: "1rem" },
+                "&:hover": { color: "#fff" },
+              }}
+            >
+              ❌ Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Popover
+          open={Boolean(anchorEl)}
+          anchorEl={anchorEl}
+          onClose={() => setAnchorEl(null)}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          transformOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          <Typography
+            sx={{
+              p: 2,
+              backgroundColor: popoverType === "error" ? "red" : "green",
+              color: "white",
+              borderRadius: "6px",
+            }}
+          >
+            {popoverMessage}
+          </Typography>
+        </Popover>
       </Container>
     </Box>
   );
