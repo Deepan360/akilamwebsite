@@ -774,15 +774,17 @@ const handleSubmit = async (e) => {
                     onChange={handleChange}
                     required
                     sx={{
-                      backgroundColor: "#333",
+                      backgroundColor: "#fff",
                       borderRadius: "6px",
-                      input: {
-                        color: "#fff",
+                      "& .MuiInputBase-root": {
+                        color: "#000", // Text inside the field
                         fontSize: { xs: "0.9rem", sm: "1rem" },
                       },
-                      "& .MuiInputLabel-root": { color: "#fff" },
+                      "& .MuiInputLabel-root": {
+                        color: "#000", // Default label color
+                      },
                       "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#fff",
+                        color: "#000", // Keep consistent color when focused
                       },
                     }}
                   />
