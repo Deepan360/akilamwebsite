@@ -122,7 +122,7 @@ const Footer = () => {
               },
             }}
           >
-            T-4, Third Flour, JC Tower, Karur Bypass Road, Annamalai Nagar,
+            T-4, Third Floor, JC Tower, Karur Bypass Road, Annamalai Nagar,
             Trichy TN 620018
           </Typography>
         </Grid>
