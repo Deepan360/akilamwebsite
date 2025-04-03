@@ -343,11 +343,7 @@ const courses = [
 ];
 const Courses = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(
-    courses
-      .flatMap((category) => category.courses)
-      .find((course) => course.title === "MERN Stack") || null
-  );
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const navigate = useNavigate(); // Hook for navigation
 
   const handleOpenModal = (course) => {
