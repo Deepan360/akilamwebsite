@@ -7,6 +7,7 @@ import HomePage from "./pages/HomePage";
 import AboutUs from "./pages/AboutUs";
 import EnquiryPage from "./pages/EnquiryPage";
 import OurProducts from "./pages/OurProducts";
+import Registration from "./pages/registration";
 import Courses from "./pages/Courses";
 import TeamPage from "./pages/TeamPage";
 import "./App.css";
@@ -47,6 +48,7 @@ function App() {
           <Route path="/TeamPage" element={<TeamPage />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/OurProducts" element={<OurProducts />} />
+          <Route path="/registration" element={<Registration />} />
         </Routes>
         <Footer />
       </Router>

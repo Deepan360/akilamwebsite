@@ -15,10 +15,12 @@ import {
   DialogTitle,
   TextField,
   Snackbar,
-  Alert
+  Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@mui/material";
-
-
 
 import { useNavigate } from "react-router-dom";
  
@@ -115,6 +117,15 @@ const courses = [
           "Full-stack development with MongoDB, Express.js, React, and Node.js.",
         imageUrl:
           "https://miro.medium.com/v2/resize:fit:720/format:webp/0*kxPYwfJmkXZ3iCWy.png",
+        duration: "6 months",
+        rating: 4.7,
+      },
+      {
+        title: "MEAN Stack",
+        description:
+          "Full-stack development with MongoDB, Express.js, Angular, and Node.js.",
+        imageUrl:
+          "https://www.mindinventory.com/blog/wp-content/uploads/2023/02/advantages-of-choosing-MEAN-stack-for-web-development-project.webp",
         duration: "6 months",
         rating: 4.7,
       },
@@ -332,14 +343,19 @@ const courses = [
 ];
 const Courses = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(
+    courses
+      .flatMap((category) => category.courses)
+      .find((course) => course.title === "MERN Stack") || null
+  );
   const navigate = useNavigate(); // Hook for navigation
 
   const handleOpenModal = (course) => {
     setSelectedCourse(course);
     setOpenModal(true);
   };
-  const [openContactModal, setOpenContactModal] = useState(false);
+
+  const [openContactModal, setOpenContactModal] = useState(true);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -352,9 +368,9 @@ const Courses = () => {
 const [loading, setLoading] = useState(false);
 
   // Handle form field changes
-  const handleChange = (e) => {
+const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+ };
 
   const [anchorEl, setAnchorEl] = useState(null);
   const [popoverMessage, setPopoverMessage] = useState("");
@@ -409,9 +425,6 @@ const handleSubmit = async (e) => {
     setOpenModal(false);
   }
 };
-
-
-
 
 
   const handleCloseModal = () => {
@@ -612,24 +625,33 @@ const handleSubmit = async (e) => {
               <Grid container spacing={2}>
                 {/* Selected Course */}
                 <Grid item xs={12}>
-                  <TextField
-                    label="Selected Course"
-                    variant="filled"
-                    fullWidth
-                    name="course"
-                    value={selectedCourse?.title || ""}
-                    InputProps={{ readOnly: true }}
-                    sx={{
-                      backgroundColor: "#f1f1f1",
-                      color: "primary.main",
-                      borderRadius: "6px",
-                      input: {
+                  <FormControl fullWidth variant="filled">
+                    <InputLabel sx={{ color: "grey.400" }}>
+                      Select a Course
+                    </InputLabel>
+                    <Select
+                      value={selectedCourse?.title || ""}
+                      onChange={(e) => {
+                        const newCourse = courses
+                          .flatMap((category) => category.courses) // Flatten all courses
+                          .find((course) => course.title === e.target.value);
+                        setSelectedCourse(newCourse || null);
+                      }}
+                      sx={{
+                        backgroundColor: "#f1f1f1",
+                        borderRadius: "6px",
                         color: "primary.main",
-                        fontWeight: "bold",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                    }}
-                  />
+                      }}
+                    >
+                      {courses
+                        .flatMap((category) => category.courses)
+                        .map((course) => (
+                          <MenuItem key={course.title} value={course.title}>
+                            {course.title}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
 
                 {/* First Name & Last Name (Stacked on Mobile) */}

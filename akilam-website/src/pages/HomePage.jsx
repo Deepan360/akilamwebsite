@@ -230,6 +230,9 @@ const HomePage = () => {
           display: "flex",
           alignItems: "center",
           background: "linear-gradient(#000,rgb(25, 40, 71))",
+          flexDirection: { xs: "column", md: "row" }, // Stack on mobile, row on desktop
+          justifyContent: "center",
+          textAlign: { xs: "center", md: "left" }, // Center text on mobile
         }}
       >
         {/* Parallax Background */}
@@ -246,7 +249,7 @@ const HomePage = () => {
               zIndex: 0,
               transform: "rotate(-45deg)",
             }}
-          ></Box>
+          />
         </Parallax>
 
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
@@ -258,13 +261,11 @@ const HomePage = () => {
                   variant="h1"
                   sx={{
                     fontWeight: 900,
-                    fontSize: { xs: "2.5rem", sm: "3rem", md: "5rem" },
+                    fontSize: { xs: "2rem", sm: "2.5rem", md: "5rem" }, // Adjust size for mobile
                     lineHeight: 1.2,
                     color: "#ffffff",
-                    mb: { xs: 2, md: 3 },
-                    mt: { xs: 4, md: 0 },
-                    textShadow:
-                      "0 4px 20px rgba(255, 255, 255, 0.5), 0 4px 60px rgba(0, 0, 0, 0.9)",
+                    mb: { xs: 1.5, md: 3 },
+                    mt: { xs: 3, md: 0 },
                     textAlign: { xs: "center", md: "left" },
                   }}
                 >
@@ -278,9 +279,9 @@ const HomePage = () => {
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: { xs: "1rem", sm: "1.2rem", md: "1.3rem" },
+                    fontSize: { xs: "0.9rem", sm: "1rem", md: "1.3rem" },
                     color: "#b0b0b0",
-                    mb: 4,
+                    mb: 3,
                     maxWidth: { xs: "100%", sm: "90%", md: "85%" },
                     textAlign: { xs: "center", md: "left" },
                   }}
@@ -291,45 +292,55 @@ const HomePage = () => {
               </Fade>
               <Fade bottom>
                 <Box sx={{ textAlign: { xs: "center", md: "left" } }}>
-                  <Button
-                    variant="contained"
+                  <Box
                     sx={{
-                      padding: "12px 28px",
-                      backgroundColor: "#ae3a94",
-                      fontSize: { xs: "1rem", md: "1.2rem" },
-                      color: "#fff",
-                      fontWeight: "bold",
-                      borderRadius: "50px",
-                      boxShadow: "0 10px 40px rgba(174, 58, 148, 0.6)",
-                      transition: "all 0.4s ease",
-                      "&:hover": {
-                        backgroundColor: "#95007e",
-                        transform: "translateY(-3px) scale(1.05)",
-                      },
-                      mr: 2,
+                      display: "flex",
+                      flexDirection: { xs: "column", md: "row" }, // Stack on mobile, inline on desktop
+                      gap: 2, // Adds spacing between buttons
+                      alignItems: "center", // Keeps buttons aligned properly
                     }}
-                    onClick={handleScrollToTop}
                   >
-                    Get Started
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      padding: "12px 28px",
-                      fontSize: { xs: "1rem", md: "1.2rem" },
-                      color: "#b0b0b0",
-                      border: "2px solid #b0b0b0",
-                      borderRadius: "50px",
-                      transition: "all 0.4s ease",
-                      "&:hover": {
-                        borderColor: "#fff",
+                    <Button
+                      variant="contained"
+                      sx={{
+                        padding: "10px 24px",
+                        backgroundColor: "#ae3a94",
+                        fontSize: { xs: "0.9rem", md: "1.2rem" },
                         color: "#fff",
-                        backgroundColor: "rgba(174, 58, 148, 0.2)",
-                      },
-                    }}
-                  >
-                    Learn More
-                  </Button>
+                        fontWeight: "bold",
+                        borderRadius: "50px",
+                        boxShadow: "0 8px 30px rgba(174, 58, 148, 0.5)",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          backgroundColor: "#95007e",
+                          transform: "translateY(-3px) scale(1.05)",
+                        },
+                        mb: { xs: 2, md: 0 }, // Margin-bottom only for mobile
+                      }}
+                      onClick={handleScrollToTop}
+                    >
+                      Get Started
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        padding: "10px 24px",
+                        fontSize: { xs: "0.9rem", md: "1.2rem" },
+                        color: "#b0b0b0",
+                        border: "2px solid #b0b0b0",
+                        borderRadius: "50px",
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          borderColor: "#fff",
+                          color: "#fff",
+                          backgroundColor: "rgba(174, 58, 148, 0.2)",
+                        },
+                      }}
+                    >
+                      Learn More
+                    </Button>
+                  </Box>
                 </Box>
               </Fade>
             </Grid>
@@ -343,7 +354,7 @@ const HomePage = () => {
                     justifyContent: "center",
                     position: "relative",
                     width: "100%",
-                    height: "auto",
+                    height: { xs: "280px", sm: "350px", md: "500px" }, // Adjust image height for mobile
                     overflow: "hidden",
                   }}
                 >
@@ -352,7 +363,7 @@ const HomePage = () => {
                       display: "flex",
                       position: "relative",
                       width: "100%",
-                      height: "500px",
+                      height: "100%",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
@@ -364,7 +375,7 @@ const HomePage = () => {
                         alt={`Illustration ${index + 1}`}
                         style={{
                           position: "absolute",
-                          width: "100%",
+                          width: "90%", // Reduce width for mobile
                           height: "100%",
                           objectFit: "contain",
                           opacity: currentIndex === index ? 1 : 0,
