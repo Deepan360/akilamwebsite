@@ -576,6 +576,7 @@ const handleSubmit = async (e) => {
           onClose={() => setOpenContactModal(false)}
           maxWidth="sm"
           fullWidth
+          transitionDuration={1000}
         >
           {/* Modal Header */}
           <DialogTitle
