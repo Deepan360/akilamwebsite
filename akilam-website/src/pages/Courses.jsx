@@ -395,7 +395,7 @@ const Courses = () => {
 
 const [loading, setLoading] = useState(false);
 
-  // Handle form field changes
+// Handle form field changes
 const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
  };
