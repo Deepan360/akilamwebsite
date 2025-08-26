@@ -18,6 +18,7 @@ const pages = [
   { name: "Courses", route: "/courses" },
   { name: "Team", route: "/TeamPage" },
   { name: "ContactUs", route: "/ContactUs" },
+  { name: "Privacy Policy", route: "/privacypolicy" },
 ];
 
 const Header = () => {

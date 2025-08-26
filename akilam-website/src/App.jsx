@@ -17,6 +17,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./components/ScrollToTop"; // Import the component
+import PrivacyPolicy from "./pages/privacypolicy";
 
 function App() {
   const theme = createTheme({
@@ -49,6 +50,7 @@ function App() {
           <Route path="/Courses" element={<Courses />} />
           <Route path="/OurProducts" element={<OurProducts />} />
           <Route path="/registration" element={<Registration />} />
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
         <Footer />
       </Router>

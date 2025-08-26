@@ -27,6 +27,38 @@ import { useNavigate } from "react-router-dom";
 // Categorized Course Data
 const courses = [
   {
+    category: "Summer Bootcamp Courses",
+    courses: [
+      {
+        title: "Web Development Bootcamp",
+        description:
+          "Learn HTML, CSS, JavaScript, and modern frameworks in this intensive bootcamp.",
+        imageUrl:
+          "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*l4xICbIIYlz1OTymWCoUTw.jpeg",
+        duration: "10 days",
+        rating: 4.7,
+      },
+      {
+        title: "Mobile App Development Bootcamp",
+        description:
+          "basic Flutter for cross-platform mobile app development in this bootcamp.",
+        imageUrl:
+          "https://techvify-software.com/wp-content/uploads/2023/06/flutter-app-development.png",
+        duration: "10 days",
+        rating: 4.8,
+      },
+      {
+        title: "fullstack Bootcamp",
+        description:
+          "Learn full-stack development with chosen technologies like react, angular, .net, django, nodejs  in this intensive bootcamp.",
+        imageUrl:
+          "https://www.developeronrent.com/blogs/wp-content/uploads/2017/12/mean-stack-vs-mern-stack-810x425.jpg",
+        duration: "2 months",
+        rating: 4.6,
+      },
+    ],
+  },
+  {
     category: "Frontend Development",
     courses: [
       {
@@ -343,7 +375,7 @@ const courses = [
 ];
 const Courses = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(courses[0]?.courses[0] || null);
   const navigate = useNavigate(); // Hook for navigation
 
   const handleOpenModal = (course) => {
