@@ -28,17 +28,17 @@ const teamMembers = [
   },
 
   {
-    name: "Abdul Basheer",
-    role: "Senior Developer",
-    image: "/team/dummy.png",
-    bio: "Expert in software development and AI-driven solutions.",
+    name: "Abdul Basheer A K",
+    role: " Mobile & Web Developer",
+    image: "/team/bhai.jpg",
+    bio: "Team Lead ",
     category: "Technology",
   },
   {
-    name: "Raveendar",
-    role: "Senior Developer",
-    image: "/team/dummy.png",
-    bio: "Expert in software development and AI-driven solutions.",
+    name: "S.Antony Robinson",
+    role: "MCA, AI, ML",
+    image: "/team/at.jpg",
+    bio: "Subject Matter Expert",
     category: "Technology",
   },
 ];

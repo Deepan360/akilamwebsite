@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Container,
   Typography,
@@ -16,374 +16,16 @@ import {
   TextField,
   Snackbar,
   Alert,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem
+  Skeleton,
 } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
- 
-// Categorized Course Data
-const courses = [
-  {
-    category: "Summer Bootcamp Courses",
-    courses: [
-      {
-        title: "Web Development Bootcamp",
-        description:
-          "Learn HTML, CSS, JavaScript, and modern frameworks in this intensive bootcamp.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:4800/format:webp/1*l4xICbIIYlz1OTymWCoUTw.jpeg",
-        duration: "10 days",
-        rating: 4.7,
-      },
-      {
-        title: "Mobile App Development Bootcamp",
-        description:
-          "basic Flutter for cross-platform mobile app development in this bootcamp.",
-        imageUrl:
-          "https://techvify-software.com/wp-content/uploads/2023/06/flutter-app-development.png",
-        duration: "10 days",
-        rating: 4.8,
-      },
-      {
-        title: "fullstack Bootcamp",
-        description:
-          "Learn full-stack development with chosen technologies like react, angular, .net, django, nodejs  in this intensive bootcamp.",
-        imageUrl:
-          "https://www.developeronrent.com/blogs/wp-content/uploads/2017/12/mean-stack-vs-mern-stack-810x425.jpg",
-        duration: "2 months",
-        rating: 4.6,
-      },
-    ],
-  },
-  {
-    category: "Frontend Development",
-    courses: [
-      {
-        title: "Angular",
-        description:
-          "Master Angular for building scalable web applications with TypeScript.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg",
-        duration: "3 months",
-        rating: 4.7,
-      },
-      {
-        title: "React.js",
-        description:
-          "Learn React.js for developing dynamic and interactive user interfaces.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-        duration: "3 months",
-        rating: 4.8,
-      },
-      {
-        title: "Bootstrap, HTML & CSS",
-        description:
-          "Fundamentals of responsive web design with HTML5, CSS3, and Bootstrap.",
-        imageUrl:
-          "https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png",
-        duration: "2 months",
-        rating: 4.6,
-      },
-    ],
-  },
-  {
-    category: "Backend Development",
-    courses: [
-      {
-        title: "Node.js",
-        description:
-          "Build scalable backend applications using Node.js and Express.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
-        duration: "4 months",
-        rating: 4.6,
-      },
-      {
-        title: "Django",
-        description:
-          "Develop fast and secure applications with Django and Python.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/7/75/Django_logo.svg",
-        duration: "4 months",
-        rating: 4.7,
-      },
-      {
-        title: "Spring Boot",
-        description:
-          "Learn Spring Boot for enterprise Java application development.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/4/44/Spring_Framework_Logo_2018.svg",
-        duration: "5 months",
-        rating: 4.8,
-      },
-      {
-        title: ".NET Framework & MVC",
-        description:
-          "Comprehensive .NET Framework and MVC training for web applications.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/7/7d/Microsoft_.NET_logo.svg",
-        duration: "5 months",
-        rating: 4.7,
-      },
-      {
-        title: ".NET Core",
-        description:
-          "Master .NET Core for cross-platform enterprise-level development.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg",
-        duration: "5 months",
-        rating: 4.7,
-      },
-    ],
-  },
-  {
-    category: "Full-Stack Development",
-    courses: [
-      {
-        title: "MERN Stack",
-        description:
-          "Full-stack development with MongoDB, Express.js, React, and Node.js.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:720/format:webp/0*kxPYwfJmkXZ3iCWy.png",
-        duration: "6 months",
-        rating: 4.7,
-      },
-      {
-        title: "MEAN Stack",
-        description:
-          "Full-stack development with MongoDB, Express.js, Angular, and Node.js.",
-        imageUrl:
-          "https://www.mindinventory.com/blog/wp-content/uploads/2023/02/advantages-of-choosing-MEAN-stack-for-web-development-project.webp",
-        duration: "6 months",
-        rating: 4.7,
-      },
-      {
-        title: "Full-Stack Java (Spring Boot & Angular)",
-        description:
-          "Develop full-stack applications using Spring Boot and Angular.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:720/format:webp/1*NEKvZMKgY6X6fSioYSm-CA.png",
-        duration: "6 months",
-        rating: 4.8,
-      },
-      {
-        title: "Full-Stack Python (Django & React)",
-        description: "Learn Django for backend and React.js for frontend.",
-        imageUrl:
-          "https://www.saaspegasus.com/static/images/web/modern-javascript/django-react-header.51a983c82dcb.png",
-        duration: "6 months",
-        rating: 4.8,
-      },
-    ],
-  },
-  {
-    category: "Mobile App Development",
-    courses: [
-      {
-        title: "Flutter",
-        description:
-          "Create cross-platform mobile applications using Flutter and Dart.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/1/17/Google-flutter-logo.png",
-        duration: "4 months",
-        rating: 4.7,
-      },
-      {
-        title: "React Native",
-        description: "Develop iOS and Android apps using React Native.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-        duration: "4 months",
-        rating: 4.6,
-      },
-    ],
-  },
-  {
-    category: "Cloud Computing",
-    courses: [
-      {
-        title: "AWS Certified Solutions Architect",
-        description:
-          "Learn how to design, deploy, and manage scalable applications on AWS.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
-        duration: "4 months",
-        rating: 4.8,
-      },
-      {
-        title: "Microsoft Azure Fundamentals",
-        description: "Master the basics of cloud computing and Azure services.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg",
-        duration: "3 months",
-        rating: 4.7,
-      },
-      {
-        title: "Google Cloud Associate Engineer",
-        description:
-          "Develop skills to deploy and manage applications on Google Cloud.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/5/51/Google_Cloud_logo.svg",
-        duration: "4 months",
-        rating: 4.7,
-      },
-      {
-        title: "DevOps with AWS & Kubernetes",
-        description:
-          "Implement DevOps practices using AWS, Kubernetes, and CI/CD pipelines.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
-        duration: "5 months",
-        rating: 4.8,
-      },
-      // {
-      //   title: "Cloud Security & Compliance",
-      //   description:
-      //     "Understand cloud security best practices, compliance, and risk management.",
-      //   imageUrl: "https://via.placeholder.com/300x200",
-      //   duration: "3 months",
-      //   rating: 4.6,
-      // },
-    ],
-  },
-  {
-    category: "Database Management",
-    courses: [
-      {
-        title: "SQL for Beginners",
-        description:
-          "Learn SQL from scratch and manage relational databases effectively.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/8/87/Sql_data_base_with_logo.png",
-        duration: "3 months",
-        rating: 4.7,
-      },
-      {
-        title: "MySQL & PostgreSQL",
-        description:
-          "Master MySQL and PostgreSQL for database administration and optimization.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg",
-        duration: "4 months",
-        rating: 4.8,
-      },
-      {
-        title: "MongoDB NoSQL Database",
-        description:
-          "Learn NoSQL with MongoDB for scalable and high-performance databases.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:720/format:webp/0*tdiQR1PX3wb-V_bG.jpg",
-        duration: "3 months",
-        rating: 4.7,
-      },
-      {
-        title: "Microsoft SQL Server & T-SQL",
-        description:
-          "Gain expertise in Microsoft SQL Server and T-SQL for enterprise applications.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:720/format:webp/0*KIJFYRKcHCfYQaX0.png",
-        duration: "4 months",
-        rating: 4.6,
-      },
-      {
-        title: "Oracle Database Administration",
-        description:
-          "Master Oracle Database for enterprise-level database management.",
-        imageUrl:
-          "https://www.crossjoin.pt/wp-content/uploads/2019/08/ImagemArtigo-Site-1-1024x683.jpg",
-        duration: "5 months",
-        rating: 4.8,
-      },
-    ],
-  },
-  {
-    category: "Data Analytics & Business Intelligence",
-    courses: [
-      {
-        title: "Data Analytics with Python",
-        description:
-          "Learn data analysis, visualization, and manipulation using Python libraries.",
-        imageUrl:
-          "https://bigdataanalyticsnews.com/wp-content/uploads/2022/10/Python-For-Data-Science.jpg",
-        duration: "4 months",
-        rating: 4.8,
-      },
-      {
-        title: "Power BI & Business Intelligence",
-        description:
-          "Master Power BI for interactive dashboards and business insights.",
-        imageUrl:
-          "https://miro.medium.com/v2/resize:fit:720/format:webp/1*7vuiKbVTu4XJpFTkuAGwFg.png",
-        duration: "3 months",
-        rating: 4.7,
-      },
-      {
-        title: "Data Science with R",
-        description:
-          "Analyze data and build predictive models using R programming.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/1/1b/R_logo.svg",
-        duration: "4 months",
-        rating: 4.6,
-      },
-      {
-        title: "Machine Learning with TensorFlow",
-        description:
-          "Develop machine learning models using TensorFlow and deep learning techniques.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg",
-        duration: "5 months",
-        rating: 4.9,
-      },
-      {
-        title: "Big Data & Apache Hadoop",
-        description:
-          "Learn big data processing with Hadoop, Spark, and distributed computing.",
-        imageUrl:
-          "https://upload.wikimedia.org/wikipedia/commons/3/38/Hadoop_logo_new.svg",
-        duration: "5 months",
-        rating: 4.7,
-      },
-    ],
-  },
-  {
-    category: "Digital Marketing",
-    courses: [
-      {
-        title: "SEO & Content Marketing",
-        description:
-          "Master SEO strategies, keyword optimization, and content marketing techniques.",
-        imageUrl:
-          "https://5862065.fs1.hubspotusercontent-na1.net/hubfs/5862065/Imported_Blog_Media/seo-vs-content.png",
-        duration: "3 months",
-        rating: 4.5,
-      },
-      {
-        title: "Social Media Marketing",
-        description:
-          "Learn advertising, branding, and engagement strategies on social media platforms.",
-        imageUrl: "https://www.zoopero.com/img/services/services5-w.png",
-        duration: "2 months",
-        rating: 4.6,
-      },
-    ],
-  },
-];
+import { API_BASE_URL } from "../config";
+import { CircularProgress } from "@mui/material";
+
 const Courses = () => {
+  const [courses, setCourses] = useState([]);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState(courses[0]?.courses[0] || null);
-  const navigate = useNavigate(); // Hook for navigation
-
-  const handleOpenModal = (course) => {
-    setSelectedCourse(course);
-    setOpenModal(true);
-  };
-
-  const [openContactModal, setOpenContactModal] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -392,68 +34,319 @@ const Courses = () => {
     email: "",
     message: "",
   });
-
-const [loading, setLoading] = useState(false);
-
-// Handle form field changes
-const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
- };
-
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [popoverMessage, setPopoverMessage] = useState("");
-  const [popoverType, setPopoverType] = useState("error"); // "success" or "error"
+  const [popoverType, setPopoverType] = useState("error");
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true); // Start loading
-  setAnchorEl(null);
- const finalFormData = {
-    ...formData,
-    course: selectedCourse?.title || "No Course Selected",
-  };
-  try {
-    const response = await fetch(
-      "https://akilamwebserver.onrender.com/send-email",
-      {   
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(finalFormData),
-      }
-    );
+  // coupon/payment states
+  const [couponCode, setCouponCode] = useState("");
+  const [finalFee, setFinalFee] = useState(null);
 
-    const result = await response.json();
-    if (result.success) {
-      setPopoverMessage("Your successfully Registered!");
-      setPopoverType("success");
+  const navigate = useNavigate();
 
-      setTimeout(() => {
-        setOpenContactModal(false);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          dob: "",
-          mobile: "",
-          email: "",
-          message: "",
-        });
-      }, 1000);
-    } else {
-      setPopoverMessage("Failed to send the message. Please try again.");
-      setPopoverType("error");
-    }
-  } catch (error) {
-    console.error("Error:", error);
-    setPopoverMessage("Error sending message.");
-    setPopoverType("error");
-  } finally {
-    setLoading(false); // Stop loading
-    // Show popover without anchor
-    setTimeout(() => setPopoverMessage(""), 3000);
-    setOpenModal(false);
+  // --- Helpers ---
+const normalizeCourse = (item, baseUrl = `${window.location.origin}`) => {
+  let img = item?.imageUrl ?? item?.courseimage ?? item?.image ?? "";
+
+  // Ensure full URL if it's just a path
+  if (img && !img.startsWith("http")) {
+    img = `${baseUrl}${img.startsWith("/") ? "" : "/"}${img}`;
   }
+
+  return {
+    id: item?.id ?? item?.courseid ?? item?._id ?? null,
+    title: item?.title ?? item?.course ?? item?.name ?? "Untitled",
+    imageUrl: img, // 👈 always normalized here
+    description: item?.description ?? item?.coursedetails ?? "",
+    duration: item?.duration ?? item?.courseduration ?? item?.time ?? "—",
+    fee: item?.coursefee ?? 0,
+    category:
+      item?.category ?? item?.coursecategory ?? item?.categoryname ?? "General",
+  };
 };
 
+
+  const groupByCategory = useCallback((flat) => {
+    const byCat = new Map();
+    flat.forEach((raw) => {
+      const c = normalizeCourse(raw);
+      if (!byCat.has(c.category)) {
+        byCat.set(c.category, { category: c.category, courses: [] });
+      }
+      byCat.get(c.category).courses.push(c);
+    });
+    return Array.from(byCat.values());
+  }, []);
+  const commonTextFieldProps = {
+    variant: "outlined",
+    fullWidth: true,
+    InputLabelProps: {
+      sx: {
+        color: "#aaa",
+        "&.Mui-focused": { color: "primary.main" },
+        fontSize: "0.9rem",
+        fontWeight: 500,
+      },
+    },
+    InputProps: {
+      sx: {
+        color: "#fff",
+        fontSize: 14,
+        borderRadius: 2,
+        background: "#1B1B1B",
+        "& .MuiOutlinedInput-notchedOutline": { borderColor: "#333" },
+        "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#555" },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderColor: "primary.main",
+        },
+      },
+    },
+  };
+
+  // Fetch courses
+  useEffect(() => {
+    setLoading(true); // Start loading
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/courses`);
+        const data = await response.json();
+
+        if (!Array.isArray(data)) {
+          console.warn("Unexpected API shape. Expected an array.", data);
+          setCourses([]);
+          return;
+        }
+
+        const looksGrouped =
+          data.length > 0 &&
+          data.every(
+            (x) =>
+              typeof x === "object" &&
+              "category" in x &&
+              Array.isArray(x.courses)
+          );
+
+        if (looksGrouped) {
+          const normalized = data.map((cat) => ({
+            category: cat.category ?? "General",
+            courses: Array.isArray(cat.courses)
+              ? cat.courses.map(normalizeCourse)
+              : [],
+          }));
+          setCourses(normalized);
+        } else {
+          const grouped = groupByCategory(data);
+          setCourses(grouped);
+        }
+      } catch (err) {
+        console.error("Failed to fetch courses:", err);
+        setCourses([]);
+      } finally {
+        setLoading(false); // End loading
+      }
+    };
+
+    fetchCourses();
+  }, [groupByCategory]);
+
+  const handleOpenModal = (course) => {
+    setSelectedCourse(course ?? null);
+    setFinalFee(null);
+    setCouponCode("");
+    setOpenModal(true);
+  };
+
+  const handleChange = (e) => {
+    setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
+  };
+
+  // apply coupon
+  const handleApplyCoupon = async () => {
+    if (!couponCode || !selectedCourse) return;
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/validate-coupon`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          couponCode,
+          courseFee: selectedCourse.fee,
+        }),
+      });
+      const data = await res.json();
+
+      if (data.valid) {
+        setFinalFee(data.finalAmount);
+        setPopoverMessage(data.message);
+        setPopoverType("success");
+      } else {
+        setFinalFee(null);
+        setPopoverMessage(data.message);
+        setPopoverType("error");
+      }
+    } catch (err) {
+      console.error(err);
+      setPopoverMessage("Error validating coupon");
+      setPopoverType("error");
+    }
+  };
+
+  // handle payment + registration
+  // handle payment + registration
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    // 1️⃣ Frontend validation
+    if (!selectedCourse || !selectedCourse.id) {
+      setPopoverMessage("⚠️ Please select a valid course.");
+      setPopoverType("error");
+      return;
+    }
+
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.email ||
+      !formData.mobile ||
+      !formData.dob
+    ) {
+      setPopoverMessage("⚠️ All required fields must be filled.");
+      setPopoverType("error");
+      return;
+    }
+
+    // 2️⃣ Calculate fee (from backend logic or coupon applied)
+    const payable = finalFee ?? selectedCourse.fee;
+
+    // 3️⃣ Step 1: Register user
+    const registerRes = await fetch(`${API_BASE_URL}/api/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...formData,
+        courseId: selectedCourse.id,
+        couponCode: couponCode || null,
+      }),
+    });
+
+    const registerData = await registerRes.json();
+    console.log("RegisterData:", registerData);
+
+    if (!registerData.success || !registerData.registrationId) {
+      throw new Error(registerData.message || "Registration failed");
+    }
+
+    const { registrationId, coursefee } = registerData;
+
+    // ✅ 4️⃣ Skip payment if free course
+    if (Number(coursefee) === 0 || Number(payable) === 0) {
+      setPopoverMessage("🎉 You’re successfully registered for FREE!");
+      setPopoverType("success");
+      setOpenModal(false);
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        dob: "",
+        mobile: "",
+        email: "",
+        message: "",
+      });
+
+      return; // ⛔ Exit early, no Razorpay
+    }
+
+    // 5️⃣ Step 2: Create Razorpay order
+    const orderRes = await fetch(`${API_BASE_URL}/api/create-order`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ registrationId }),
+    });
+
+    const orderData = await orderRes.json();
+    console.log("OrderData:", orderData);
+
+    if (!orderData.success || !orderData.orderId) {
+      throw new Error(orderData.message || "Order creation failed");
+    }
+
+    // 6️⃣ Razorpay options
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "Akilam Academy",
+      description: selectedCourse?.title,
+      image: "/akilam-website/public/AkilamTechmidlogo.png",
+      order_id: orderData.orderId,
+      prefill: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        contact: formData.mobile,
+      },
+      notes: { registrationId, course: selectedCourse?.title },
+      theme: { color: "#ae3a94" },
+
+      handler: async function (response) {
+        try {
+          const verifyRes = await fetch(`${API_BASE_URL}/api/verify-payment`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+
+          const result = await verifyRes.json();
+
+          if (result.success) {
+            setPopoverMessage("🎉 You’re successfully registered!");
+            setPopoverType("success");
+            setOpenModal(false);
+
+            setFormData({
+              firstName: "",
+              lastName: "",
+              dob: "",
+              mobile: "",
+              email: "",
+              message: "",
+            });
+          } else {
+            setPopoverMessage(result.message || "Payment verification failed.");
+            setPopoverType("error");
+          }
+        } catch (err) {
+          console.error("Verification error:", err);
+          setPopoverMessage("Something went wrong in verification.");
+          setPopoverType("error");
+        }
+      },
+
+      modal: {
+        ondismiss: () => {
+          setPopoverMessage("Payment popup closed.");
+          setPopoverType("warning");
+        },
+      },
+    };
+
+    // 7️⃣ Open Razorpay checkout
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  } catch (error) {
+    console.error("Order Error:", error);
+    setPopoverMessage(error.message || "Payment failed. Try again.");
+    setPopoverType("error");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -463,12 +356,7 @@ const handleSubmit = async (e) => {
   return (
     <Box sx={{ background: "#1b2c50", color: "#c9d1d9", minHeight: "100vh" }}>
       <Container
-        sx={{
-          paddingTop: "80px",
-          paddingBottom: "80px",
-
-          color: "#fff",
-        }}
+        sx={{ paddingTop: "80px", paddingBottom: "80px", color: "#fff" }}
       >
         <Typography
           variant="h4"
@@ -477,423 +365,382 @@ const handleSubmit = async (e) => {
         >
           Explore Our Courses
         </Typography>
-        {courses.map((category, index) => (
-          <div key={index}>
-            <Typography
-              variant="h5"
-              sx={{ mt: 3, mb: 3, color: "#fff", fontWeight: "bold" }}
-            >
-              {category.category}
-            </Typography>
-            <Grid container spacing={3}>
-              {category.courses.map((course, idx) => (
-                <Grid item key={idx} xs={12} sm={6} md={4}>
-                  <Card
+
+        {/* Loader → Courses → No Courses */}
+        {loading ? (
+          <Grid container spacing={3}>
+            {[...Array(6)].map((_, idx) => (
+              <Grid item xs={12} sm={6} md={4} key={idx}>
+                <Card
+                  sx={{
+                    background: "#1E1E1E",
+                    borderRadius: "12px",
+                    p: 2,
+                    height: "100%",
+                  }}
+                >
+                  {/* Image Placeholder */}
+                  <Skeleton
+                    variant="rectangular"
+                    height={200}
                     sx={{
-                      background: "#1E1E1E",
-                      color: "#fff",
-                      borderRadius: "12px",
-                      boxShadow: "0px 4px 15px rgba(255, 255, 255, 0.15)",
-                      transition: "0.3s ease-in-out",
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                      "&:hover": {
-                        boxShadow: "0px 4px 20px #ae3a94", // Use primary color for hover effect
-                        transform: "scale(1.05)",
-                      },
+                      bgcolor: "rgba(255,255,255,0.08)",
+                      borderRadius: "8px",
+                      mb: 2,
                     }}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      sx={{ objectFit: "contain", background: "#fff" }}
-                      image={course.imageUrl}
-                      alt={course.title}
+                  />
+
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    {/* Title */}
+                    <Skeleton
+                      variant="text"
+                      width="70%"
+                      height={28}
+                      sx={{ bgcolor: "rgba(255,255,255,0.15)", mb: 1 }}
                     />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography
-                        variant="h6"
-                        sx={{ fontWeight: "bold", color: "primary.main" }} // Heading uses primary color
-                      >
-                        {course.title}
-                      </Typography>
-                      <Typography variant="body2" sx={{ opacity: 0.8, mb: 1 }}>
-                        {course.description}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Duration:</strong> {course.duration}
-                      </Typography>
-                      {/* <Typography variant="body2">
-                        <strong>Rating:</strong> {course.rating} ⭐
-                      </Typography> */}
-                    </CardContent>
-                    <Button
-                      onClick={() => handleOpenModal(course)}
+
+                    {/* Description */}
+                    <Skeleton
+                      variant="text"
+                      width="100%"
+                      height={20}
+                      sx={{ bgcolor: "rgba(255,255,255,0.08)", mb: 1 }}
+                    />
+                    <Skeleton
+                      variant="text"
+                      width="90%"
+                      height={20}
+                      sx={{ bgcolor: "rgba(255,255,255,0.08)", mb: 2 }}
+                    />
+
+                    {/* Duration & Fee */}
+                    <Skeleton
+                      variant="text"
+                      width="50%"
+                      height={20}
+                      sx={{ bgcolor: "rgba(255,255,255,0.1)", mb: 1 }}
+                    />
+                    <Skeleton
+                      variant="text"
+                      width="40%"
+                      height={20}
+                      sx={{ bgcolor: "rgba(255,255,255,0.1)", mb: 2 }}
+                    />
+                  </CardContent>
+
+                  {/* Button Placeholder */}
+                  <Skeleton
+                    variant="rectangular"
+                    height={45}
+                    sx={{
+                      bgcolor: "rgba(174,58,148,0.3)",
+                      borderRadius: "0px 0px 12px 12px",
+                    }}
+                  />
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        ) : courses.length > 0 ? (
+          courses.map((category, index) => (
+            <div key={category?.category ?? index}>
+              <Typography
+                variant="h5"
+                sx={{ mt: 3, mb: 3, color: "#fff", fontWeight: "bold" }}
+              >
+                {category?.category ?? "General"}
+              </Typography>
+              <Grid container spacing={3}>
+                {(category?.courses ?? []).map((course, idx) => (
+                  <Grid
+                    item
+                    key={`${course?.title ?? "untitled"}-${idx}`}
+                    xs={12}
+                    sm={6}
+                    md={4}
+                  >
+                    <Card
                       sx={{
-                        width: "100%",
-                        backgroundColor: "primary.main", // Primary color for button
+                        background: "#1E1E1E",
                         color: "#fff",
-                        borderRadius: "0px 0px 12px 12px",
-                        fontWeight: "bold",
-                        "&:hover": { backgroundColor: "secondary.main" }, // Secondary color on hover
+                        borderRadius: "12px",
+                        boxShadow: "0px 4px 15px rgba(255, 255, 255, 0.15)",
+                        transition: "0.3s ease-in-out",
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "100%",
+                        "&:hover": {
+                          boxShadow: "0px 4px 20px #ae3a94",
+                          transform: "scale(1.05)",
+                        },
                       }}
                     >
-                      Contact Us
-                    </Button>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </div>
-        ))}
-        {/* Modal */}
-        <Dialog open={openModal} onClose={handleCloseModal}>
-          <DialogTitle
-            sx={{
-              background: "#1E1E1E",
-              color: "primary.main",
-              fontWeight: "bold",
-            }}
-          >
-            Enroll in {selectedCourse?.title}
-          </DialogTitle>
-          <DialogContent sx={{ background: "#1E1E1E", color: "#fff" }}>
-            <Typography variant="body1">
-              {selectedCourse?.description}
-            </Typography>
-            <Typography variant="body2" sx={{ mt: 2 }}>
-              <strong>Duration:</strong> {selectedCourse?.duration}
-            </Typography>
-            <Box
-              sx={{
-                mt: 3,
-                background: "primary.main",
-                padding: "10px",
-                borderRadius: "8px",
-                textAlign: "center",
-              }}
-            >
-              <Typography
-                variant="subtitle1"
-                sx={{ color: "#fff", fontWeight: "bold" }}
-              >
-                Interested? Contact us for more details!
-              </Typography>
-            </Box>
-          </DialogContent>
-          <DialogActions sx={{ background: "#1E1E1E" }}>
-            <Button
-              onClick={handleCloseModal}
-              sx={{ color: "secondary.main", fontWeight: "bold" }}
-            >
-              Close
-            </Button>
-            <Button
-              onClick={() => setOpenContactModal(true)} // Open contact form modal
-              sx={{
-                backgroundColor: "primary.main",
-                color: "#fff",
-                fontWeight: "bold",
-                "&:hover": { backgroundColor: "primary.dark" },
-              }}
-            >
-              Register Now
-            </Button>
-          </DialogActions>
-        </Dialog>
-        {/* Contact Form Modal */}
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        sx={{ objectFit: "contain", background: "#fff" }}
+                        image={course?.imageUrl || ""}
+                        alt={course?.title || "Course image"}
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography
+                          variant="h6"
+                          sx={{ fontWeight: "bold", color: "primary.main" }}
+                        >
+                          {course?.title ?? "Untitled"}
+                        </Typography>
+                        {course?.description && (
+                          <Typography
+                            variant="body2"
+                            sx={{ opacity: 0.8, mb: 1 }}
+                          >
+                            {course.description}
+                          </Typography>
+                        )}
+                        <Typography variant="body2">
+                          <strong>Duration:</strong> {course?.duration ?? "—"}
+                        </Typography>
+                        <Typography variant="body2">
+                          <strong>Fee:</strong> ₹{course?.fee ?? "—"}
+                        </Typography>
+                      </CardContent>
+                      <Button
+                        onClick={() => handleOpenModal(course)}
+                        sx={{
+                          width: "100%",
+                          backgroundColor: "primary.main",
+                          color: "#fff",
+                          borderRadius: "0px 0px 12px 12px",
+                          fontWeight: "bold",
+                          "&:hover": { backgroundColor: "secondary.main" },
+                        }}
+                      >
+                        Register
+                      </Button>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          ))
+        ) : (
+          <Typography align="center" sx={{ opacity: 0.9 }}>
+            No courses available.
+          </Typography>
+        )}
+
+        {/* Registration Modal */}
         <Dialog
-          open={openContactModal}
-          onClose={() => setOpenContactModal(false)}
+          open={openModal}
+          onClose={handleCloseModal}
           maxWidth="sm"
           fullWidth
-          transitionDuration={1000}
-        >
-          {/* Modal Header */}
-          <DialogTitle
-            sx={{
+          PaperProps={{
+            sx: {
               background: "#121212",
-              color: "primary.main",
-              fontWeight: "bold",
-              textAlign: "center",
-              fontSize: { xs: "1.2rem", sm: "1.5rem" },
-              py: 2,
-            }}
-          >
-            📩 Get in Touch
-          </DialogTitle>
-
-          {/* Modal Content */}
-          <DialogContent
-            sx={{
-              background: "#1E1E1E",
-              color: "#fff",
-              px: { xs: 2, sm: 4 },
-              pb: 3,
-            }}
-          >
+              borderRadius: 3,
+              overflow: "hidden",
+            },
+          }}
+        >
+          {/* Header */}
+          <Box sx={{ background: "#1E1E1E", p: 3 }}>
             <Typography
-              variant="body2"
-              sx={{ textAlign: "center", py: 2, color: "grey.300" }}
+              variant="h5"
+              sx={{ color: "#F8F8F8", fontWeight: "bold" }}
             >
-              Fill out the form below, and we’ll get back to you soon!
+              Register & Pay
             </Typography>
+            {selectedCourse && (
+              <Typography variant="subtitle1" sx={{ color: "#aaa", mt: 0.5 }}>
+                {selectedCourse.title}
+              </Typography>
+            )}
+          </Box>
 
+          {/* Content */}
+          <DialogContent sx={{ p: 3, background: "#121212" }}>
+            {/* Course Summary */}
+            {selectedCourse && (
+              <Box
+                sx={{
+                  mb: 3,
+                  p: 2,
+                  background: "#1B1B1B",
+                  borderRadius: 2,
+                  border: "1px solid #333",
+                }}
+              >
+                <Typography variant="body1" sx={{ color: "#fff", mb: 1 }}>
+                  {selectedCourse.description}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#ccc" }}>
+                  <strong>Duration:</strong> {selectedCourse.duration}
+                </Typography>
+                <Typography variant="body2" sx={{ color: "#ccc" }}>
+                  <strong>Original Fee:</strong> ₹{selectedCourse.fee}
+                </Typography>
+                {finalFee !== null && (
+                  <Typography
+                    variant="h6"
+                    sx={{ mt: 1, color: "primary.main", fontWeight: "bold" }}
+                  >
+                    Payable: ₹{finalFee}
+                  </Typography>
+                )}
+              </Box>
+            )}
+
+            {/* Coupon Field */}
+            <Box sx={{ display: "flex", gap: 1, mb: 3 }}>
+              <TextField
+                placeholder="Enter coupon code"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                {...commonTextFieldProps}
+              />
+              <Button
+                onClick={handleApplyCoupon}
+                variant="contained"
+                sx={{
+                  backgroundColor: "primary.main",
+                  fontWeight: "bold",
+                  px: 3,
+                  "&:hover": { backgroundColor: "#c450b3" },
+                }}
+              >
+                Apply
+              </Button>
+            </Box>
+
+            {/* Registration Form */}
             <Box
               component="form"
               onSubmit={handleSubmit}
               noValidate
-              sx={{
-                backgroundColor: "#2E2E2E",
-                padding: { xs: "16px", sm: "24px" },
-                borderRadius: "10px",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-              }}
+              sx={{ display: "grid", gap: 2 }}
             >
-              <Grid container spacing={2}>
-                {/* Selected Course */}
-                <Grid item xs={12}>
-                  <FormControl fullWidth variant="filled">
-                    <InputLabel sx={{ color: "grey.400" }}>
-                      Select a Course
-                    </InputLabel>
-                    <Select
-                      value={selectedCourse?.title || ""}
-                      onChange={(e) => {
-                        const newCourse = courses
-                          .flatMap((category) => category.courses) // Flatten all courses
-                          .find((course) => course.title === e.target.value);
-                        setSelectedCourse(newCourse || null);
-                      }}
-                      sx={{
-                        backgroundColor: "#f1f1f1",
-                        borderRadius: "6px",
-                        color: "primary.main",
-                      }}
-                    >
-                      {courses
-                        .flatMap((category) => category.courses)
-                        .map((course) => (
-                          <MenuItem key={course.title} value={course.title}>
-                            {course.title}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <TextField
+                  label="First Name"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={(e) =>
+                    setFormData((p) => ({
+                      ...p,
+                      firstName: e.target.value.replace(/[^a-zA-Z ]/g, ""),
+                    }))
+                  }
+                  required
+                  {...commonTextFieldProps}
+                />
+                <TextField
+                  label="Last Name"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={(e) =>
+                    setFormData((p) => ({
+                      ...p,
+                      lastName: e.target.value.replace(/[^a-zA-Z ]/g, ""),
+                    }))
+                  }
+                  required
+                  {...commonTextFieldProps}
+                />
+              </Box>
 
-                {/* First Name & Last Name (Stacked on Mobile) */}
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="First Name"
-                    variant="filled"
-                    fullWidth
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                    sx={{
-                      backgroundColor: "#333",
-                      borderRadius: "6px",
-                      input: {
-                        color: "#fff",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
-                      },
-                    }}
-                  />
-                </Grid>
+              <TextField
+                label="Date of Birth"
+                type="date"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                required
+                {...commonTextFieldProps}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: {
+                    color: "#aaa",
+                    "&.Mui-focused": { color: "primary.main" },
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                  },
+                }}
+                inputProps={{
+                  placeholder: "",
+                }}
+              />
 
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    label="Last Name"
-                    variant="filled"
-                    fullWidth
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                    sx={{
-                      backgroundColor: "#333",
-                      borderRadius: "6px",
-                      input: {
-                        color: "#fff",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
-                      },
-                    }}
-                  />
-                </Grid>
+              <TextField
+                label="Mobile"
+                name="mobile"
+                value={formData.mobile}
+                onChange={(e) =>
+                  setFormData((p) => ({
+                    ...p,
+                    mobile: e.target.value.replace(/[^0-9]/g, ""),
+                  }))
+                }
+                required
+                {...commonTextFieldProps}
+              />
 
-                {/* Date of Birth */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Date of Birth"
-                    variant="filled"
-                    fullWidth
-                    type="date"
-                    name="dob"
-                    value={formData.dob}
-                    onChange={handleChange}
-                    required
-                    InputLabelProps={{ shrink: true }}
-                    sx={{
-                      backgroundColor: "#333",
-                      borderRadius: "6px",
-                      input: {
-                        color: "#fff",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
-                      },
-                    }}
-                  />
-                </Grid>
+              <TextField
+                label="Email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                {...commonTextFieldProps}
+              />
 
-                {/* Mobile Number */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Mobile Number"
-                    variant="filled"
-                    fullWidth
-                    type="tel"
-                    name="mobile"
-                    value={formData.mobile}
-                    onChange={handleChange}
-                    required
-                    inputProps={{ maxLength: 10, pattern: "[0-9]{10}" }}
-                    sx={{
-                      backgroundColor: "#333",
-                      borderRadius: "6px",
-                      input: {
-                        color: "#fff",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
-                      },
-                    }}
-                  />
-                </Grid>
-
-                {/* Email ID */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Email ID"
-                    variant="filled"
-                    fullWidth
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    sx={{
-                      backgroundColor: "#333",
-                      borderRadius: "6px",
-                      input: {
-                        color: "#fff",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": { color: "grey.400" },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "primary.main",
-                      },
-                    }}
-                  />
-                </Grid>
-
-                {/* Message Field */}
-                <Grid item xs={12}>
-                  <TextField
-                    label="Message"
-                    variant="filled"
-                    fullWidth
-                    multiline
-                    rows={3}
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    sx={{
-                      backgroundColor: "#fff",
-                      borderRadius: "6px",
-                      "& .MuiInputBase-root": {
-                        color: "#000", // Text inside the field
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "#000", // Default label color
-                      },
-                      "& .MuiInputLabel-root.Mui-focused": {
-                        color: "#000", // Keep consistent color when focused
-                      },
-                    }}
-                  />
-                </Grid>
-              </Grid>
+              <TextField
+                label="Message (Optional)"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                multiline
+                rows={3}
+                {...commonTextFieldProps}
+              />
 
               {/* Submit Button */}
               <Button
                 type="submit"
                 fullWidth
+                variant="contained"
                 sx={{
-                  backgroundColor: loading ? "grey.600" : "primary.main",
-                  color: loading ? "grey.300" : "#1E1E1E",
+                  backgroundColor: "primary.main",
                   fontWeight: "bold",
-                  fontSize: { xs: "1rem", sm: "1.1rem" },
-                  mt: 3,
                   py: 1.5,
-                  borderRadius: "8px",
-                  boxShadow: loading
-                    ? "none"
-                    : "0px 4px 8px rgba(249, 38, 221, 0.3)",
-                  transition: "0.3s",
-                  cursor: loading ? "not-allowed" : "pointer",
-                  "&:hover": {
-                    backgroundColor: loading ? "grey.600" : "secondary.main",
-                    transform: loading ? "none" : "translateY(-2px)",
-                  },
+                  borderRadius: 2,
+                  fontSize: 16,
+                  "&:hover": { backgroundColor: "#c450b3" },
                 }}
                 disabled={loading}
               >
-                {loading ? "Sending..." : "🚀 Send Message"}
+                {loading ? "Processing Payment..." : "Pay & Register"}
               </Button>
             </Box>
           </DialogContent>
 
-          {/* Close Button */}
-          <DialogActions
-            sx={{ background: "#121212", justifyContent: "center", pb: 2 }}
-          >
-            <Button
-              onClick={() => setOpenContactModal(false)}
-              sx={{
-                color: "grey.400",
-                fontWeight: "bold",
-                textTransform: "none",
-                fontSize: { xs: "0.9rem", sm: "1rem" },
-                "&:hover": { color: "#fff" },
-              }}
-            >
-              ❌ Close
+          {/* Footer */}
+          <DialogActions sx={{ background: "#1E1E1E", px: 3, pb: 2 }}>
+            <Button onClick={handleCloseModal} sx={{ color: "#aaa" }}>
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>
+
         <Snackbar
           open={!!popoverMessage}
           autoHideDuration={3000}
           onClose={() => setPopoverMessage("")}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }} // Show at top center
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           <Alert
             onClose={() => setPopoverMessage("")}

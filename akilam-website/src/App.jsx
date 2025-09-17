@@ -18,6 +18,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ScrollToTop from "./components/ScrollToTop"; // Import the component
 import PrivacyPolicy from "./pages/privacypolicy";
+import BackendPage from "./pages/backendPage";
+import MeitRegistration from "./pages/MietRegistration";
+
 
 function App() {
   const theme = createTheme({
@@ -51,6 +54,9 @@ function App() {
           <Route path="/OurProducts" element={<OurProducts />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/backendPage" element={<BackendPage />} />
+          <Route path="/MietRegistration" element={<MeitRegistration />} />
+          
         </Routes>
         <Footer />
       </Router>
